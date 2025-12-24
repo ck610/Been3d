@@ -250,6 +250,8 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.10);margin:14px 0}
           <input id="disc_video_basic" placeholder="Sconto Video Base">
           <input id="disc_video_pro" placeholder="Sconto Video Pro">
           <input id="disc_grafica" placeholder="Sconto Grafica">
+          <input id="disc_bot_discord" placeholder="Sconto Bot Discord">
+          <input id="disc_plugin_mc" placeholder="Sconto Plugin Minecraft">
         </div>
 
         <div class="row">
@@ -437,12 +439,16 @@ function loadPricesDiscounts(){
   price_video_basic.value = p.video_basic ?? "";
   price_video_pro.value = p.video_pro ?? "";
   price_grafica.value = p.grafica ?? "";
+  price_bot_discord.value = p.bot_discord ?? "";
+  price_plugin_mc.value  = p.plugin_mc ?? "";
 
   disc_sito_basic.value = d.sito_basic ?? "";
   disc_sito_pro.value = d.sito_pro ?? "";
   disc_video_basic.value = d.video_basic ?? "";
   disc_video_pro.value = d.video_pro ?? "";
   disc_grafica.value = d.grafica ?? "";
+  disc_bot_discord.value = d.bot_discord ?? "";
+  disc_plugin_mc.value  = d.plugin_mc ?? "";
 }
 
 function savePricesDiscounts(){
@@ -453,6 +459,8 @@ function savePricesDiscounts(){
     video_basic:+price_video_basic.value||0,
     video_pro:+price_video_pro.value||0,
     grafica:+price_grafica.value||0
+    bot_discord:+price_bot_discord.value||0,
+    plugin_mc:+price_plugin_mc.value||0
   };
   const discounts = {
     sito_basic:+disc_sito_basic.value||0,
@@ -460,6 +468,8 @@ function savePricesDiscounts(){
     video_basic:+disc_video_basic.value||0,
     video_pro:+disc_video_pro.value||0,
     grafica:+disc_grafica.value||0
+    bot_discord:+disc_bot_discord.value||0,
+    plugin_mc:+disc_plugin_mc.value||0
   };
   setJSON(K_PRICES, prices);
   setJSON(K_DISCOUNTS, discounts);
@@ -691,4 +701,5 @@ if(!requireLogin()) {
 
 </body>
 </html>
+
 
