@@ -14,6 +14,7 @@
   --muted:rgba(255,255,255,.6);
   --accent:#a855f7;
   --accent2:#22d3ee;
+  --accent3:#f472b6;
   --radius:18px;
 }
 *{box-sizing:border-box}
@@ -33,7 +34,7 @@ body{
   padding:22px;
   backdrop-filter: blur(12px);
 }
-.brand{font-weight:900;font-size:20px;margin-bottom:14px}
+.brand{font-weight:900;font-size:20px;margin-bottom:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .userbox{
   padding:12px;border-radius:14px;
   background:rgba(255,255,255,.05);
@@ -60,7 +61,7 @@ body{
   background:var(--card);
   border-color:var(--border);
 }
-.content{padding:36px 20px;max-width:1100px}
+.content{padding:36px 20px;max-width:1200px}
 .card{
   background:var(--card);
   border:1px solid var(--border);
@@ -72,14 +73,16 @@ body{
 h1,h2,h3{margin:0 0 10px}
 p{margin:0 0 10px;color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-input,select{
+input,select,textarea{
   width:100%;
   padding:10px 12px;
   border-radius:12px;
   border:1px solid var(--border);
   background:rgba(0,0,0,.35);
   color:#fff;
+  font-family:inherit;
 }
+textarea{min-height:80px;resize:vertical}
 .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .btn{
   padding:10px 14px;
@@ -92,6 +95,7 @@ input,select{
   transition:.2s;
 }
 .btn.primary{border:none;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.btn.secondary{border:none;background:linear-gradient(135deg,var(--accent2),var(--accent3))}
 .btn:hover{transform:translateY(-1px)}
 .badge{
   display:flex;gap:10px;align-items:center;justify-content:space-between;
@@ -106,7 +110,6 @@ input,select{
 .panel{display:none}
 .panel.active{display:block}
 
-/* LOGIN MODAL */
 .overlay{
   position:fixed;inset:0;
   background:rgba(0,0,0,.65);
@@ -135,6 +138,25 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.10);margin:14px 0}
 }
 .table tr td:first-child,.table tr th:first-child{border-radius:14px 0 0 14px}
 .table tr td:last-child,.table tr th:last-child{border-radius:0 14px 14px 0}
+.status-badge{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase;
+}
+.status-nuovo{background:rgba(34,211,238,.15);border:1px solid rgba(34,211,238,.3);color:#22d3ee}
+.status-lavorazione{background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.3);color:#a855f7}
+.status-attesa{background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.3);color:#fbbf24}
+.status-pagato{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#22c55e}
+.status-consegnato{background:rgba(34,197,94,.2);border:1px solid rgba(34,197,94,.4);color:#22c55e}
+.status-annullato{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#ef4444}
+.section-divider{
+  margin:24px 0 16px;
+  padding-top:16px;
+  border-top:2px solid rgba(255,255,255,.08);
+}
 </style>
 </head>
 
@@ -231,28 +253,98 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.10);margin:14px 0}
 
     <section id="prices" class="panel">
       <div class="card">
-        <h2>💰 Prezzi & Sconti (Admin)</h2>
-        <h3>Prezzi (€)</h3>
+        <h2>💰 Prezzi & Sconti (Solo Admin)</h2>
+        <p class="small">Gestisci i prezzi e gli sconti di tutti i servizi. Le modifiche si applicano immediatamente nello shop.</p>
+        
+        <div class="section-divider">
+          <h3>🌐 Siti Web</h3>
+        </div>
         <div class="grid">
-          <input id="price_sito_basic" placeholder="Sito Web Basic">
-          <input id="price_sito_pro" placeholder="Sito Web Pro">
-          <input id="price_video_basic" placeholder="Video Editing Base">
-          <input id="price_video_pro" placeholder="Video Editing Pro">
-          <input id="price_grafica" placeholder="Grafica (Logo & Banner)">
+          <div>
+            <label class="small">Prezzo Base (€)</label>
+            <input id="price_sito_basic" placeholder="Sito Web Basic" type="number">
+          </div>
+          <div>
+            <label class="small">Sconto (%)</label>
+            <input id="disc_sito_basic" placeholder="0-100" type="number">
+          </div>
+        </div>
+        <div class="grid" style="margin-top:12px">
+          <div>
+            <label class="small">Prezzo Base (€)</label>
+            <input id="price_sito_pro" placeholder="Sito Web Pro" type="number">
+          </div>
+          <div>
+            <label class="small">Sconto (%)</label>
+            <input id="disc_sito_pro" placeholder="0-100" type="number">
+          </div>
         </div>
 
-        <h3 style="margin-top:16px">Sconti (%)</h3>
+        <div class="section-divider">
+          <h3>🎮 Discord & Minecraft</h3>
+        </div>
         <div class="grid">
-          <input id="disc_sito_basic" placeholder="Sconto Sito Basic">
-          <input id="disc_sito_pro" placeholder="Sconto Sito Pro">
-          <input id="disc_video_basic" placeholder="Sconto Video Base">
-          <input id="disc_video_pro" placeholder="Sconto Video Pro">
-          <input id="disc_grafica" placeholder="Sconto Grafica">
+          <div>
+            <label class="small">Prezzo Base (€)</label>
+            <input id="price_bot_discord" placeholder="Bot Discord Custom" type="number">
+          </div>
+          <div>
+            <label class="small">Sconto (%)</label>
+            <input id="disc_bot_discord" placeholder="0-100" type="number">
+          </div>
+        </div>
+        <div class="grid" style="margin-top:12px">
+          <div>
+            <label class="small">Prezzo Base (€)</label>
+            <input id="price_plugin_mc" placeholder="Plugin Minecraft" type="number">
+          </div>
+          <div>
+            <label class="small">Sconto (%)</label>
+            <input id="disc_plugin_mc" placeholder="0-100" type="number">
+          </div>
         </div>
 
-        <div class="row">
-          <button class="btn primary" onclick="savePricesDiscounts()">Salva</button>
-          <button class="btn" onclick="resetPricesDiscounts()">Reset (admin)</button>
+        <div class="section-divider">
+          <h3>🎨 Grafica</h3>
+        </div>
+        <div class="grid">
+          <div>
+            <label class="small">Prezzo Base (€)</label>
+            <input id="price_grafica" placeholder="Logo & Banner" type="number">
+          </div>
+          <div>
+            <label class="small">Sconto (%)</label>
+            <input id="disc_grafica" placeholder="0-100" type="number">
+          </div>
+        </div>
+
+        <div class="section-divider">
+          <h3>🎬 Video Editing</h3>
+        </div>
+        <div class="grid">
+          <div>
+            <label class="small">Prezzo Base (€)</label>
+            <input id="price_video_basic" placeholder="Video Editing Base" type="number">
+          </div>
+          <div>
+            <label class="small">Sconto (%)</label>
+            <input id="disc_video_basic" placeholder="0-100" type="number">
+          </div>
+        </div>
+        <div class="grid" style="margin-top:12px">
+          <div>
+            <label class="small">Prezzo Base (€)</label>
+            <input id="price_video_pro" placeholder="Video Editing Pro" type="number">
+          </div>
+          <div>
+            <label class="small">Sconto (%)</label>
+            <input id="disc_video_pro" placeholder="0-100" type="number">
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:24px">
+          <button class="btn primary" onclick="savePricesDiscounts()">💾 Salva tutto</button>
+          <button class="btn" onclick="resetPricesDiscounts()">🔄 Reset (admin)</button>
         </div>
       </div>
     </section>
@@ -398,7 +490,7 @@ function audit(type, message){
     type,
     message
   });
-  setJSON(K_AUDIT, log.slice(0, 500)); // max 500
+  setJSON(K_AUDIT, log.slice(0, 500));
 }
 
 function renderAudit(){
@@ -430,17 +522,24 @@ function loadPricesDiscounts(){
   if(!isAdmin()) return;
   const p = getJSON(K_PRICES, {});
   const d = getJSON(K_DISCOUNTS, {});
+  
+  // Prices
   price_sito_basic.value = p.sito_basic ?? "";
   price_sito_pro.value = p.sito_pro ?? "";
+  price_bot_discord.value = p.bot_discord ?? "";
+  price_plugin_mc.value = p.plugin_mc ?? "";
+  price_grafica.value = p.grafica ?? "";
   price_video_basic.value = p.video_basic ?? "";
   price_video_pro.value = p.video_pro ?? "";
-  price_grafica.value = p.grafica ?? "";
 
+  // Discounts
   disc_sito_basic.value = d.sito_basic ?? "";
   disc_sito_pro.value = d.sito_pro ?? "";
+  disc_bot_discord.value = d.bot_discord ?? "";
+  disc_plugin_mc.value = d.plugin_mc ?? "";
+  disc_grafica.value = d.grafica ?? "";
   disc_video_basic.value = d.video_basic ?? "";
   disc_video_pro.value = d.video_pro ?? "";
-  disc_grafica.value = d.grafica ?? "";
 }
 
 function savePricesDiscounts(){
@@ -448,21 +547,25 @@ function savePricesDiscounts(){
   const prices = {
     sito_basic:+price_sito_basic.value||0,
     sito_pro:+price_sito_pro.value||0,
+    bot_discord:+price_bot_discord.value||0,
+    plugin_mc:+price_plugin_mc.value||0,
+    grafica:+price_grafica.value||0,
     video_basic:+price_video_basic.value||0,
-    video_pro:+price_video_pro.value||0,
-    grafica:+price_grafica.value||0
+    video_pro:+price_video_pro.value||0
   };
   const discounts = {
     sito_basic:+disc_sito_basic.value||0,
     sito_pro:+disc_sito_pro.value||0,
+    bot_discord:+disc_bot_discord.value||0,
+    plugin_mc:+disc_plugin_mc.value||0,
+    grafica:+disc_grafica.value||0,
     video_basic:+disc_video_basic.value||0,
-    video_pro:+disc_video_pro.value||0,
-    grafica:+disc_grafica.value||0
+    video_pro:+disc_video_pro.value||0
   };
   setJSON(K_PRICES, prices);
   setJSON(K_DISCOUNTS, discounts);
   audit("PRICING", "Aggiornati prezzi/sconti prodotti");
-  alert("Salvato. Apri shop.html e vedrai i nuovi prezzi.");
+  alert("✅ Salvato! Apri shop.html e vedrai i nuovi prezzi.");
 }
 
 function resetPricesDiscounts(){
@@ -472,10 +575,11 @@ function resetPricesDiscounts(){
     localStorage.removeItem(K_DISCOUNTS);
     audit("PRICING_RESET", "Reset prezzi/sconti");
     loadPricesDiscounts();
+    alert("✅ Reset completato!");
   }
 }
 
-/* ========= COUPONS (advanced: limit, expire, used, active) ========= */
+/* ========= COUPONS ========= */
 function coupons(){ return getJSON(K_COUPONS, []); }
 function saveCoupons(list){ setJSON(K_COUPONS, list); }
 function createCoupon(){
@@ -517,7 +621,7 @@ function renderCoupons(){
       <div class="badge">
         <div>
           <div><strong>${escapeHtml(c.code)}</strong> — -${c.discount}% • ${escapeHtml(lim)} • ${escapeHtml(exp)}</div>
-          <div class="small">Stato: ${c.active?"ON":"OFF"}</div>
+          <div class="small">Stato: ${c.active?"✅ Attivo":"❌ Disattivo"}</div>
         </div>
         <div class="row" style="margin:0">
           <button class="btn" onclick="toggleCoupon('${c.code}')">${c.active?"Disattiva":"Attiva"}</button>
@@ -564,130 +668,4 @@ function renderStaff(){
     <div class="badge">
       <div>
         <div><strong>${escapeHtml(u.username)}</strong> — ${escapeHtml(u.role)}</div>
-        <div class="small">Creato: ${new Date(u.createdAt).toLocaleString()}</div>
-      </div>
-      <div class="row" style="margin:0">
-        <button class="btn" onclick="removeUser('${u.username}')">Elimina</button>
-      </div>
-    </div>
-  `).join("");
-}
-
-function changeMyPassword(){
-  const sess = session();
-  const oldP = (meOld.value||"").trim();
-  const newP = (meNew.value||"").trim();
-  if(newP.length<4) return alert("Password min 4.");
-
-  const list = users();
-  const me = list.find(u=>u.username===sess.username);
-  if(!me || me.pass!==oldP) return alert("Vecchia password errata.");
-
-  me.pass = newP;
-  saveUsers(list);
-  audit("PASSWORD", `Password aggiornata per ${sess.username}`);
-  alert("Password aggiornata.");
-  meOld.value=""; meNew.value="";
-}
-
-/* ========= ORDERS ========= */
-function orders(){ return getJSON(K_ORDERS, []); }
-function saveOrders(list){ setJSON(K_ORDERS, list); }
-
-function renderOrders(){
-  const list = orders();
-  ordersList.innerHTML = list.length ? list.map(o=>{
-    const items = o.items.map(it=>`${escapeHtml(it.name)} (${money(it.price)})`).join(", ");
-    return `
-      <div class="badge" style="align-items:flex-start">
-        <div>
-          <div><strong>#${escapeHtml(o.id)}</strong> — ${escapeHtml(o.status)} • ${money(o.total)}</div>
-          <div class="small">${new Date(o.createdAt).toLocaleString()} • ${escapeHtml(o.customerEmail||"—")} • Coupon: ${escapeHtml(o.coupon||"—")}</div>
-          <div class="small">Prodotti: ${items}</div>
-          <div class="small">Note: ${escapeHtml(o.note||"—")}</div>
-        </div>
-        <div style="min-width:240px">
-          <select id="st_${o.id}" style="margin-bottom:8px">
-            ${["Nuovo","In lavorazione","In attesa pagamento","Pagato","Consegnato","Annullato"].map(s=>`<option ${o.status===s?"selected":""}>${s}</option>`).join("")}
-          </select>
-          <div class="row" style="margin:0">
-            <button class="btn primary" onclick="updateOrderStatus('${o.id}')">Aggiorna</button>
-            <button class="btn" onclick="deleteOrder('${o.id}')">Elimina</button>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join("") : `<p class="small">Nessun ordine ancora.</p>`;
-
-  refreshKPIs();
-}
-
-function updateOrderStatus(id){
-  const list = orders();
-  const idx = list.findIndex(o=>o.id===id);
-  if(idx<0) return;
-  const sel = document.getElementById(`st_${id}`);
-  const newStatus = sel.value;
-  const old = list[idx].status;
-  list[idx].status = newStatus;
-  list[idx].updatedAt = nowISO();
-  saveOrders(list);
-  audit("ORDER_STATUS", `Ordine #${id}: ${old} → ${newStatus}`);
-  renderOrders();
-}
-
-function deleteOrder(id){
-  if(!isAdmin()) return alert("Solo admin può eliminare.");
-  const list = orders().filter(o=>o.id!==id);
-  saveOrders(list);
-  audit("ORDER_DELETE", `Eliminato ordine #${id}`);
-  renderOrders();
-}
-
-function exportOrders(){
-  const list = orders();
-  navigator.clipboard.writeText(JSON.stringify(list,null,2));
-  alert("Ordini copiati negli appunti (JSON).");
-}
-
-function clearOrders(){
-  if(!isAdmin()) return alert("Solo admin.");
-  if(confirm("Svuotare tutti gli ordini?")){
-    saveOrders([]);
-    audit("ORDER_CLEAR", "Svuotati ordini");
-    renderOrders();
-  }
-}
-
-/* ========= KPI ========= */
-function refreshKPIs(){
-  const list = orders();
-  const total = list.length;
-  const nieuw = list.filter(o=>o.status==="Nuovo").length;
-  const paid = list.filter(o=>o.status==="Pagato" || o.status==="Consegnato").length;
-  const revenue = list.reduce((sum,o)=>sum + (+o.total||0), 0);
-
-  kpiOrders.textContent = total;
-  kpiNew.textContent = nieuw;
-  kpiPaid.textContent = paid;
-  kpiRevenue.textContent = money(revenue);
-}
-
-/* ========= INIT ========= */
-seedAdmin();
-if(!requireLogin()) {
-  // stop render
-} else {
-  applyPermissionsUI();
-  renderCoupons();
-  renderOrders();
-  renderStaff();
-  renderAudit();
-  loadPricesDiscounts();
-}
-</script>
-
-</body>
-</html>
-
-
+        <div class="small">Creato: ${new Date
