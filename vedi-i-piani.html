@@ -1,553 +1,768 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Been 3D - Listini Prezzi</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Been 3D — Listini Prezzi</title>
+  <meta name="description" content="Been 3D — Prezzi ottimi per servizi web, grafica e video di qualità premium." />
+  <style>
+    /* ======================================================
+       BEEN 3D — PRICING PAGE (PREMIUM 2025)
+    ====================================================== */
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a3e 100%);
-            color: #fff;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
+    /* ------------------ ROOT ------------------ */
+    :root{
+      --bg:#05040a;
+      --card:rgba(255,255,255,.06);
+      --stroke:rgba(255,255,255,.14);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.65);
+      --accent:#a855f7;
+      --accent2:#22d3ee;
+      --radius:22px;
+      --shadow:0 40px 140px rgba(0,0,0,.65);
+    }
 
-        .hero {
-            text-align: center;
-            padding: 80px 20px 60px;
-            position: relative;
-        }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;padding:0}
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(138, 43, 226, 0.15) 0%, transparent 70%);
-            pointer-events: none;
-            animation: pulse 4s ease-in-out infinite;
-        }
+    body{
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(168,85,247,.22), transparent 60%),
+        radial-gradient(1200px 700px at 80% 20%, rgba(34,211,238,.18), transparent 60%),
+        var(--bg);
+      overflow-x:hidden;
+    }
 
-        @keyframes pulse {
-            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.5; }
-            50% { transform: translateX(-50%) scale(1.2); opacity: 0.8; }
-        }
+    a{color:inherit;text-decoration:none}
 
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #8a2be2, #00d4ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: slideDown 0.8s ease-out;
-        }
+    /* ------------------ BACKGROUND ------------------ */
+    #bg3d{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+    }
 
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    .noise{
+      pointer-events:none;
+      position:fixed;
+      inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+      opacity:.35;
+      z-index:-2;
+    }
 
-        .subtitle {
-            font-size: 1.3rem;
-            color: #a0a0c0;
-            max-width: 700px;
-            margin: 0 auto 15px;
-            line-height: 1.6;
-            animation: fadeIn 1s ease-out 0.3s both;
-        }
+    /* ------------------ NAVBAR ------------------ */
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:100;
+      backdrop-filter:blur(18px);
+      background:linear-gradient(90deg,rgba(10,8,18,.9),rgba(6,6,12,.8));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+    .nav-wrap{
+      max-width:1200px;
+      margin:auto;
+      padding:14px 22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
 
-        .highlight {
-            color: #00d4ff;
-            font-weight: 700;
-        }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      letter-spacing:.3px;
+    }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+    .brand span{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;
+      color:transparent;
+    }
 
-        .section {
-            margin-bottom: 80px;
-            animation: fadeInUp 0.8s ease-out;
-        }
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:18px;
+    }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    .nav-links a{
+      padding:8px 14px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:13px;
+      color:rgba(255,255,255,.75);
+      transition:.25s ease;
+    }
 
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+    .nav-links a:hover{
+      color:#fff;
+      background:rgba(255,255,255,.08);
+    }
 
-        .section-desc {
-            font-size: 1.1rem;
-            color: #b0b0d0;
-            margin-bottom: 40px;
-        }
+    .nav-pill{
+      padding:8px 16px!important;
+      border-radius:999px!important;
+      font-weight:900!important;
+      background:linear-gradient(135deg,rgba(168,85,247,.25),rgba(34,211,238,.25))!important;
+      border:1px solid rgba(168,85,247,.45)!important;
+      box-shadow:0 0 28px rgba(168,85,247,.35)!important;
+    }
 
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            perspective: 1000px;
-        }
+    .nav-actions{
+      display:flex;
+      gap:12px;
+    }
 
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 35px;
-            position: relative;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d;
-            cursor: pointer;
-        }
+    /* ------------------ BUTTONS ------------------ */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      padding:10px 16px;
+      border-radius:14px;
+      font-weight:900;
+      font-size:13px;
+      cursor:pointer;
+      transition:.25s ease;
+      border:none;
+    }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 20px;
-            background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(0, 212, 255, 0.1));
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
+    .btn.ghost{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+    }
 
-        .card:hover {
-            transform: translateY(-15px) rotateX(5deg);
-            border-color: rgba(138, 43, 226, 0.5);
-            box-shadow: 0 25px 50px rgba(138, 43, 226, 0.3);
-        }
+    .btn.primary{
+      position:relative;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 0 26px rgba(168,85,247,.5);
+      overflow:hidden;
+    }
 
-        .card:hover::before {
-            opacity: 1;
-        }
+    .btn.primary::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.35),transparent 70%);
+      transform:translateX(-120%);
+    }
 
-        .card.recommended {
-            border: 2px solid #8a2be2;
-            box-shadow: 0 0 30px rgba(138, 43, 226, 0.4);
-        }
+    .btn.primary:hover::after{
+      animation:shine 1.2s ease;
+    }
 
-        .badge {
-            position: absolute;
-            top: -15px;
-            right: 20px;
-            background: linear-gradient(135deg, #8a2be2, #00d4ff);
-            color: #fff;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
-        }
+    @keyframes shine{
+      to{transform:translateX(120%)}
+    }
 
-        .discount {
-            position: absolute;
-            top: -15px;
-            left: 20px;
-            background: #ff4757;
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
-        }
+    .btn:hover{
+      transform:translateY(-2px);
+    }
 
-        .card-title {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            color: #fff;
-            font-weight: 700;
-        }
+    /* ------------------ HERO ------------------ */
+    .hero{
+      position:relative;
+      text-align:center;
+      padding:120px 20px 80px;
+    }
 
-        .card-subtitle {
-            font-size: 1rem;
-            color: #a0a0c0;
-            margin-bottom: 25px;
-        }
+    .hero::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:50%;
+      transform:translateX(-50%);
+      width:800px;
+      height:800px;
+      background:radial-gradient(circle, rgba(138, 43, 226, 0.2) 0%, transparent 70%);
+      pointer-events:none;
+      animation:pulse 4s ease-in-out infinite;
+    }
 
-        .price-container {
-            margin: 25px 0;
-        }
+    @keyframes pulse{
+      0%,100%{transform:translateX(-50%) scale(1);opacity:0.5}
+      50%{transform:translateX(-50%) scale(1.2);opacity:0.8}
+    }
 
-        .price {
-            font-size: 3rem;
-            font-weight: 900;
-            color: #00d4ff;
-            display: flex;
-            align-items: baseline;
-            gap: 8px;
-        }
+    h1{
+      font-size:clamp(48px,6vw,82px);
+      font-weight:900;
+      margin:0 0 20px;
+      line-height:1.05;
+      letter-spacing:-1.5px;
+    }
 
-        .old-price {
-            font-size: 1.8rem;
-            color: #666;
-            text-decoration: line-through;
-        }
+    .grad{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      text-shadow:0 0 40px rgba(168,85,247,.45),0 0 80px rgba(34,211,238,.25);
+    }
 
-        .price-label {
-            font-size: 0.95rem;
-            color: #888;
-            margin-top: 5px;
-        }
+    .subtitle{
+      font-size:clamp(17px,2vw,20px);
+      color:var(--muted);
+      max-width:700px;
+      margin:0 auto 35px;
+      line-height:1.6;
+    }
 
-        .features {
-            list-style: none;
-            margin: 25px 0;
-        }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      font-size:13px;
+      font-weight:800;
+      margin:0 6px 8px;
+    }
 
-        .features li {
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #d0d0e0;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
+    /* ------------------ CONTAINER ------------------ */
+    .container{
+      max-width:1200px;
+      margin:auto;
+      padding:0 20px 80px;
+    }
 
-        .features li:hover {
-            color: #00d4ff;
-            padding-left: 10px;
-        }
+    /* ------------------ SECTIONS ------------------ */
+    .section{
+      margin-bottom:90px;
+    }
 
-        .features li::before {
-            content: '✓';
-            color: #00d4ff;
-            font-weight: 900;
-            font-size: 1.3rem;
-        }
+    .section-title{
+      font-size:clamp(26px,3vw,32px);
+      margin-bottom:12px;
+      color:#fff;
+      text-transform:uppercase;
+      letter-spacing:1.5px;
+      font-weight:900;
+    }
 
-        .btn {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #8a2be2, #00d4ff);
-            border: none;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 20px;
-            position: relative;
-            overflow: hidden;
-        }
+    .section-desc{
+      font-size:16px;
+      color:var(--muted);
+      margin-bottom:40px;
+      max-width:65ch;
+    }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
+    /* ------------------ CARDS GRID ------------------ */
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+      gap:24px;
+    }
 
-        .btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
+    .card{
+      background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:var(--radius);
+      padding:30px;
+      position:relative;
+      transition:.35s cubic-bezier(.2,.9,.2,1);
+      box-shadow:0 30px 90px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.06);
+      cursor:pointer;
+    }
 
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.5);
-        }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      border-radius:24px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      opacity:0;
+      filter:blur(20px);
+      z-index:-1;
+      transition:.35s ease;
+    }
 
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
+    .card:hover{
+      transform:translateY(-12px) scale(1.01);
+      border-color:rgba(138,43,226,.5);
+    }
 
-        .service-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.4s;
-        }
+    .card:hover::before{
+      opacity:.4;
+    }
 
-        .service-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(138, 43, 226, 0.5);
-        }
+    .card.recommended{
+      border:2px solid var(--accent);
+      box-shadow:0 0 40px rgba(138,43,226,.45);
+    }
 
-        .service-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
+    .badge{
+      position:absolute;
+      top:-14px;
+      right:24px;
+      padding:8px 18px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#fff;
+      box-shadow:0 8px 24px rgba(138,43,226,.5);
+    }
 
-        .service-title {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #00d4ff;
-        }
+    .discount{
+      position:absolute;
+      top:-14px;
+      left:24px;
+      padding:8px 16px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:900;
+      background:#ff4757;
+      color:#fff;
+      box-shadow:0 8px 24px rgba(255,71,87,.5);
+    }
 
-        .service-desc {
-            color: #b0b0d0;
-            line-height: 1.6;
-        }
+    .card-title{
+      font-size:26px;
+      margin:0 0 8px;
+      color:#fff;
+      font-weight:900;
+      letter-spacing:-.5px;
+    }
 
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .subtitle { font-size: 1.1rem; }
-            .cards-grid { grid-template-columns: 1fr; }
-            .price { font-size: 2.5rem; }
-        }
-    </style>
+    .card-subtitle{
+      font-size:14px;
+      color:var(--muted);
+      margin-bottom:24px;
+    }
+
+    .price-container{
+      margin:24px 0;
+    }
+
+    .price{
+      font-size:52px;
+      font-weight:900;
+      color:var(--accent2);
+      display:flex;
+      align-items:baseline;
+      gap:10px;
+      line-height:1;
+    }
+
+    .old-price{
+      font-size:32px;
+      color:#666;
+      text-decoration:line-through;
+    }
+
+    .price-label{
+      font-size:13px;
+      color:#888;
+      margin-top:6px;
+      font-weight:700;
+    }
+
+    .features{
+      list-style:none;
+      margin:24px 0;
+      padding:0;
+    }
+
+    .features li{
+      padding:14px 0;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      display:flex;
+      align-items:center;
+      gap:12px;
+      color:rgba(255,255,255,.85);
+      font-size:15px;
+      transition:all .3s;
+    }
+
+    .features li:hover{
+      color:var(--accent2);
+      padding-left:8px;
+    }
+
+    .features li::before{
+      content:'✓';
+      color:var(--accent2);
+      font-weight:900;
+      font-size:18px;
+      flex-shrink:0;
+    }
+
+    .card .btn{
+      width:100%;
+      padding:16px;
+      margin-top:20px;
+      justify-content:center;
+      font-size:14px;
+    }
+
+    /* ------------------ SERVICES GRID ------------------ */
+    .services-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:20px;
+      margin-top:40px;
+    }
+
+    .service-card{
+      background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.15));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:18px;
+      padding:32px;
+      text-align:center;
+      transition:all .35s;
+    }
+
+    .service-card:hover{
+      transform:translateY(-8px);
+      background:rgba(255,255,255,.1);
+      border-color:rgba(138,43,226,.4);
+      box-shadow:0 20px 60px rgba(138,43,226,.25);
+    }
+
+    .service-icon{
+      font-size:48px;
+      margin-bottom:16px;
+      filter:drop-shadow(0 0 20px rgba(168,85,247,.6));
+    }
+
+    .service-title{
+      font-size:20px;
+      margin-bottom:10px;
+      color:var(--accent2);
+      font-weight:900;
+      letter-spacing:-.3px;
+    }
+
+    .service-desc{
+      color:var(--muted);
+      line-height:1.6;
+      font-size:14px;
+    }
+
+    /* ------------------ RESPONSIVE ------------------ */
+    @media(max-width:768px){
+      .nav-links{display:none}
+      .nav-actions{flex-direction:column;gap:8px}
+      .hero{padding:80px 20px 60px}
+      .cards{grid-template-columns:1fr}
+      .services-grid{grid-template-columns:1fr}
+    }
+  </style>
 </head>
 <body>
-    <div class="hero">
-        <h1>LISTINI PREZZI - Been 3D</h1>
-        <p class="subtitle">
-            Il primo sito che offre dei prezzi <span class="highlight">"OTTIMI"</span> per offrire la maggior qualità al venditore.
-        </p>
+  <canvas id="bg3d"></canvas>
+  <div class="noise"></div>
+
+  <!-- NAVBAR -->
+  <nav class="nav">
+    <div class="nav-wrap">
+      <div class="brand">
+        Been <span>3D</span>
+      </div>
+
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Servizi</a>
+        <a href="vedi-i-piani.html" class="nav-pill">Prezzi</a>
+        <a href="#contatti">Contatti</a>
+      </div>
+
+      <div class="nav-actions">
+        <a class="btn ghost" href="index.html">← Torna alla Home</a>
+        <a class="btn primary" href="#">Entra su Discord →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>LISTINI <span class="grad">PREZZI</span></h1>
+    <p class="subtitle">
+      Been 3D: il primo sito che offre dei prezzi <strong>"OTTIMI"</strong> per offrire la maggior qualità al venditore.
+    </p>
+    <div>
+      <span class="pill">⚡ Performance</span>
+      <span class="pill">🎨 Qualità Premium</span>
+      <span class="pill">💰 Prezzi Ottimi</span>
+    </div>
+  </div>
+
+  <!-- CONTAINER -->
+  <div class="container">
+    
+    <!-- SERVIZI OVERVIEW -->
+    <div class="section">
+      <h2 class="section-title">📦 Servizi</h2>
+      <p class="section-desc">Tre cose fatte bene: design moderno, animazioni, e struttura pensata per vendere.</p>
+      
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🌐</div>
+          <h3 class="service-title">Siti Web</h3>
+          <p class="service-desc">Landing & siti completi. Layout premium, sezioni chiare, CTA forti, ottimizzato per mobile e SEO.</p>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">🎨</div>
+          <h3 class="service-title">Grafica & Brand</h3>
+          <p class="service-desc">Logo + UI kit. Identità coerente: palette, tipografia, componenti e stile "Been 3D".</p>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">🎬</div>
+          <h3 class="service-title">Video & Motion</h3>
+          <p class="service-desc">Editing e animazioni. Animazioni leggere ma "wow": hover, reveal, parallax e transizioni morbide.</p>
+        </div>
+      </div>
     </div>
 
-    <div class="container">
-        <!-- Servizi Overview -->
-        <div class="section">
-            <h2 class="section-title">📦 Servizi</h2>
-            <p class="section-desc">Tre cose fatte bene: design moderno, animazioni, e struttura pensata per vendere.</p>
-            
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">🌐</div>
-                    <h3 class="service-title">Siti Web</h3>
-                    <p class="service-desc">Landing & siti completi. Layout premium, sezioni chiare, CTA forti, ottimizzato per mobile e SEO.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🎨</div>
-                    <h3 class="service-title">Grafica & Brand</h3>
-                    <p class="service-desc">Logo + UI kit. Identità coerente: palette, tipografia, componenti e stile "Been 3D".</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🎬</div>
-                    <h3 class="service-title">Video & Motion</h3>
-                    <p class="service-desc">Editing e animazioni. Animazioni leggere ma "wow": hover, reveal, parallax e transizioni morbide.</p>
-                </div>
+    <!-- SITI WEB -->
+    <div class="section">
+      <h2 class="section-title">🌐 SITI WEB</h2>
+      <p class="section-desc">Siti progettati da zero, moderni, veloci e pensati per convertire.</p>
+      
+      <div class="cards">
+        <div class="card">
+          <div class="discount">-30%</div>
+          <h3 class="card-title">Sito Web Basic</h3>
+          <p class="card-subtitle">Landing 1 pagina</p>
+          <div class="price-container">
+            <div class="price">
+              <span class="old-price">€10</span>
+              <span>€7</span>
             </div>
+            <p class="price-label">una tantum</p>
+          </div>
+          <ul class="features">
+            <li>Landing 1 pagina</li>
+            <li>Design moderno</li>
+            <li>Responsive</li>
+            <li>Modulo contatti</li>
+          </ul>
+          <button class="btn primary">Acquista</button>
         </div>
 
-        <!-- Siti Web -->
-        <div class="section">
-            <h2 class="section-title">🌐 SITI WEB</h2>
-            <p class="section-desc">Siti progettati da zero, moderni, veloci e pensati per convertire.</p>
-            
-            <div class="cards-grid">
-                <div class="card">
-                    <div class="discount">-30%</div>
-                    <h3 class="card-title">Sito Web Basic</h3>
-                    <p class="card-subtitle">Landing 1 pagina</p>
-                    <div class="price-container">
-                        <div class="price">
-                            <span class="old-price">€10</span>
-                            <span>€7</span>
-                        </div>
-                        <p class="price-label">una tantum</p>
-                    </div>
-                    <ul class="features">
-                        <li>Landing 1 pagina</li>
-                        <li>Design moderno</li>
-                        <li>Responsive</li>
-                        <li>Modulo contatti</li>
-                    </ul>
-                    <button class="btn">Acquista</button>
-                </div>
-
-                <div class="card recommended">
-                    <div class="badge">Consigliato</div>
-                    <div class="discount">-30%</div>
-                    <h3 class="card-title">Sito Web Pro</h3>
-                    <p class="card-subtitle">Sito multi-pagina completo</p>
-                    <div class="price-container">
-                        <div class="price">
-                            <span class="old-price">€30</span>
-                            <span>€21</span>
-                        </div>
-                        <p class="price-label">una tantum</p>
-                    </div>
-                    <ul class="features">
-                        <li>Sito multi-pagina</li>
-                        <li>Animazioni moderne</li>
-                        <li>SEO base</li>
-                        <li>CTA conversioni</li>
-                    </ul>
-                    <button class="btn">Acquista</button>
-                </div>
+        <div class="card recommended">
+          <div class="badge">Consigliato</div>
+          <div class="discount">-30%</div>
+          <h3 class="card-title">Sito Web Pro</h3>
+          <p class="card-subtitle">Sito multi-pagina completo</p>
+          <div class="price-container">
+            <div class="price">
+              <span class="old-price">€30</span>
+              <span>€21</span>
             </div>
+            <p class="price-label">una tantum</p>
+          </div>
+          <ul class="features">
+            <li>Sito multi-pagina</li>
+            <li>Animazioni moderne</li>
+            <li>SEO base</li>
+            <li>CTA conversioni</li>
+          </ul>
+          <button class="btn primary">Acquista</button>
         </div>
-
-        <!-- Grafica -->
-        <div class="section">
-            <h2 class="section-title">🎨 GRAFICA</h2>
-            <p class="section-desc">Identità visiva professionale per brand coerente su web e social.</p>
-            
-            <div class="cards-grid">
-                <div class="card">
-                    <h3 class="card-title">Grafica (Logo & Banner)</h3>
-                    <p class="card-subtitle">Pack completo</p>
-                    <div class="price-container">
-                        <div class="price">
-                            <span>€5</span>
-                        </div>
-                        <p class="price-label">pacchetto</p>
-                    </div>
-                    <ul class="features">
-                        <li>Logo professionale</li>
-                        <li>Banner social / web</li>
-                        <li>Brand identity coerente</li>
-                        <li>File pronti all'uso</li>
-                    </ul>
-                    <button class="btn">Acquista</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Video Editing -->
-        <div class="section">
-            <h2 class="section-title">🎬 VIDEO EDITING</h2>
-            <p class="section-desc">Editing professionale ottimizzato per social e advertising.</p>
-            
-            <div class="cards-grid">
-                <div class="card">
-                    <h3 class="card-title">Video Editing Base</h3>
-                    <p class="card-subtitle">Editing essenziale</p>
-                    <div class="price-container">
-                        <div class="price">
-                            <span>€2</span>
-                        </div>
-                        <p class="price-label">per video</p>
-                    </div>
-                    <ul class="features">
-                        <li>Montaggio professionale</li>
-                        <li>Tagli puliti</li>
-                        <li>Formato social</li>
-                    </ul>
-                    <button class="btn">Acquista</button>
-                </div>
-
-                <div class="card">
-                    <div class="discount">-20%</div>
-                    <h3 class="card-title">Video Editing Pro</h3>
-                    <p class="card-subtitle">Editing avanzato</p>
-                    <div class="price-container">
-                        <div class="price">
-                            <span class="old-price">€5</span>
-                            <span>€4</span>
-                        </div>
-                        <p class="price-label">per video</p>
-                    </div>
-                    <ul class="features">
-                        <li>Effetti avanzati</li>
-                        <li>Color correction</li>
-                        <li>ADV ready</li>
-                    </ul>
-                    <button class="btn">Acquista</button>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <script>
-        // Animazione cards al scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }, index * 100);
-                }
-            });
-        }, { threshold: 0.1 });
+    <!-- GRAFICA -->
+    <div class="section">
+      <h2 class="section-title">🎨 GRAFICA</h2>
+      <p class="section-desc">Identità visiva professionale per brand coerente su web e social.</p>
+      
+      <div class="cards">
+        <div class="card">
+          <h3 class="card-title">Grafica (Logo & Banner)</h3>
+          <p class="card-subtitle">Pack completo</p>
+          <div class="price-container">
+            <div class="price">
+              <span>€5</span>
+            </div>
+            <p class="price-label">pacchetto</p>
+          </div>
+          <ul class="features">
+            <li>Logo professionale</li>
+            <li>Banner social / web</li>
+            <li>Brand identity coerente</li>
+            <li>File pronti all'uso</li>
+          </ul>
+          <button class="btn primary">Acquista</button>
+        </div>
+      </div>
+    </div>
 
-        document.querySelectorAll('.card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'all 0.6s ease-out';
-            observer.observe(card);
-        });
+    <!-- VIDEO EDITING -->
+    <div class="section">
+      <h2 class="section-title">🎬 VIDEO EDITING</h2>
+      <p class="section-desc">Editing professionale ottimizzato per social e advertising.</p>
+      
+      <div class="cards">
+        <div class="card">
+          <h3 class="card-title">Video Editing Base</h3>
+          <p class="card-subtitle">Editing essenziale</p>
+          <div class="price-container">
+            <div class="price">
+              <span>€2</span>
+            </div>
+            <p class="price-label">per video</p>
+          </div>
+          <ul class="features">
+            <li>Montaggio professionale</li>
+            <li>Tagli puliti</li>
+            <li>Formato social</li>
+          </ul>
+          <button class="btn primary">Acquista</button>
+        </div>
 
-        // Effetto 3D seguendo il mouse
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = (y - centerY) / 20;
-                const rotateY = (centerX - x) / 20;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px)`;
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-            });
-        });
+        <div class="card">
+          <div class="discount">-20%</div>
+          <h3 class="card-title">Video Editing Pro</h3>
+          <p class="card-subtitle">Editing avanzato</p>
+          <div class="price-container">
+            <div class="price">
+              <span class="old-price">€5</span>
+              <span>€4</span>
+            </div>
+            <p class="price-label">per video</p>
+          </div>
+          <ul class="features">
+            <li>Effetti avanzati</li>
+            <li>Color correction</li>
+            <li>ADV ready</li>
+          </ul>
+          <button class="btn primary">Acquista</button>
+        </div>
+      </div>
+    </div>
 
-        // Effetto click bottoni
-        document.querySelectorAll('.btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                const ripple = document.createElement('span');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.classList.add('ripple');
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => ripple.remove(), 600);
-            });
-        });
-    </script>
+  </div>
+
+  <script type="module">
+    // ---------- Three.js 3D background ----------
+    import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+
+    const canvas = document.querySelector('#bg3d');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha:true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
+    camera.position.set(0, 0, 7);
+
+    const resize = ()=>{
+      const w = innerWidth, h = innerHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w/h;
+      camera.updateProjectionMatrix();
+    };
+    addEventListener('resize', resize);
+    resize();
+
+    // Lights
+    const key = new THREE.PointLight(0xa855f7, 2.0, 40);
+    key.position.set(-4, 3, 6);
+    scene.add(key);
+
+    const fill = new THREE.PointLight(0x22d3ee, 1.6, 40);
+    fill.position.set(5, -2, 7);
+    scene.add(fill);
+
+    const ambient = new THREE.AmbientLight(0xffffff, 0.25);
+    scene.add(ambient);
+
+    // Group
+    const group = new THREE.Group();
+    scene.add(group);
+
+    const mat = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      roughness: 0.28,
+      metalness: 0.85,
+      emissive: new THREE.Color(0x140a2a),
+      emissiveIntensity: 0.35
+    });
+
+    const geo1 = new THREE.IcosahedronGeometry(1.1, 1);
+    const geo2 = new THREE.TorusKnotGeometry(0.72, 0.22, 220, 22);
+    const geo3 = new THREE.OctahedronGeometry(0.9, 0);
+
+    const main = new THREE.Mesh(geo2, mat);
+    main.position.set(0.0, 0.2, 0.0);
+    group.add(main);
+
+    const orb1 = new THREE.Mesh(geo1, mat.clone());
+    orb1.scale.setScalar(0.55);
+    orb1.position.set(-2.2, -1.0, -0.8);
+    group.add(orb1);
+
+    const orb2 = new THREE.Mesh(geo3, mat.clone());
+    orb2.scale.setScalar(0.62);
+    orb2.position.set(2.3, 1.1, -1.2);
+    group.add(orb2);
+
+    // Particles
+    const pCount = 900;
+    const pos = new Float32Array(pCount * 3);
+    for(let i=0;i<pCount;i++){
+      const r = 10 * Math.random();
+      const t = Math.random() * Math.PI * 2;
+      const u = (Math.random() - 0.5) * 6;
+      pos[i*3+0] = Math.cos(t) * r;
+      pos[i*3+1] = u;
+      pos[i*3+2] = (Math.sin(t) * r) - 6;
+    }
+    const pGeo = new THREE.BufferGeometry();
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    const pMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.015, transparent:true, opacity: 0.55 });
+    const points = new THREE.Points(pGeo, pMat);
+    scene.add(points);
+
+    // Mouse
+    let mx = 0, my = 0;
+    addEventListener('mousemove', (e)=>{
+      mx = (e.clientX / innerWidth) * 2 - 1;
+      my = (e.clientY / innerHeight) * 2 - 1;
+    });
+
+    let scrollY = 0;
+    addEventListener('scroll', ()=>{ scrollY = window.scrollY; }, {passive:true});
+
+    const clock = new THREE.Clock();
+
+    function animate(){
+      const t = clock.getElapsedTime();
+
+      camera.position.x += (mx * 0.55 - camera.position.x) * 0.03;
+      camera.position.y += (-my * 0.35 - camera.position.y) * 0.03;
+      camera.lookAt(0,0,0);
+
+      group.rotation.y = t * 0.35;
+      group.rotation.x = Math.sin(t * 0.5) * 0.18;
+      main.rotation.z = t * 0.25;
+
+      orb1.position.y = -1.0 + Math.sin(t * 0.9) * 0.25;
+      orb2.position.y =  1.1 + Math.cos(t * 0.8) * 0.22;
+
+      const z = -6 - Math.min(scrollY * 0.0012, 2.4);
+      points.position.z = z;
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
 </body>
 </html>
