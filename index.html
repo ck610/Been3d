@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Been 3D — Home page</title>
+  <meta name="description" content="Been 3D — Siti web, grafica e contenuti con stile 3D moderno." />
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+  <canvas id="bg3d"></canvas>
+  <div class="noise"></div>
+
+<nav class="nav">
+  <div class="nav-wrap">
+    <div class="brand">
+      <span class="logo"></span>
+      Been <span>3D</span>
+    </div>
+
+    <div class="nav-links">
+      <a href="shop.html">Servizi</a>
+      <a href="manutenzione.html">Prezzi</a>
+      <a href="manutenzione.html">Contatti</a>
+
+      <a href="shop.html" class="nav-pill active">Shop</a>
+
+      <a href="orders.html" class="nav-orders">
+        📦 I tuoi ordini
+      </a>
+    </div>
+
+    <div class="nav-actions">
+      <a class="btn ghost" href="#">Vedi i piani</a>
+      <a class="btn primary" href="#">Entra su Discord →</a>
+    </div>
+  </div>
+</nav>
+
+
+
+  <main id="home" class="container">
+    <div class="hero">
+      <div class="reveal">
+        <div class="pill"><span class="dot"></span> Grafiche + Web + Video edit</div>
+        <h1>Un sito <span class="grad">moderno</span> che si muove, spinge e converte.</h1>
+        <p class="lead">
+          Been 3D: il primo sito che offre dei prezzi "OTTIMI"
+		  per offrire la maggior qualità al venditore.
+        </p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+          <a class="btn primary" href="#servizi">Scopri i servizi</a>
+          <a class="btn" href="#portfolio">Guarda esempi</a>
+        </div>
+        <div class="shine"></div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <span class="pill">⚡ Performance</span>
+          <span class="pill">🧠 UX pulita</span>
+          <span class="pill">✨ Motion design</span>
+        </div>
+      </div>
+<div class="shop-preview">
+  <h4>Shop Preview</h4>
+
+  <div class="shop-list">
+    <div class="shop-live">
+      SHOP <span class="badge">ONLINE</span>
+    </div>
+
+    <div class="shop-row">
+      <b>124</b> Siti Web venduti
+    </div>
+
+    <div class="shop-row">
+      <b>312</b> Video editati
+    </div>
+
+    <div class="shop-row" style="opacity:.55">
+      — Prossimamente
+    </div>
+  </div>
+
+  <a class="btn" href="#contatti">Parliamone →</a>
+</div> 
+  </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <section id="servizi" class="anchor">
+      <div class="sectionTitle reveal">
+        <div>
+          <h2>Servizi</h2>
+          <p class="sub">Tre cose fatte bene: design moderno, animazioni, e struttura pensata per vendere.</p>
+        </div>
+      </div>
+
+      <div class="cards">
+        <article class="card reveal tilt">
+          <div class="badge">🌐 Siti Web</div>
+          <h3>Landing & siti completi</h3>
+          <p>Layout premium, sezioni chiare, CTA forti, ottimizzato per mobile e SEO.</p>
+        </article>
+
+        <article class="card reveal tilt">
+          <div class="badge">🎨 Grafica & Brand</div>
+          <h3>Logo + UI kit</h3>
+          <p>Identità coerente: palette, tipografia, componenti e stile “Been 3D”.</p>
+        </article>
+
+        <article class="card reveal tilt">
+          <div class="badge">🎬 Video & Motion</div>
+          <h3>Editing e animazioni</h3>
+          <p>Animazioni leggere ma “wow”: hover, reveal, parallax e transizioni morbide.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="portfolio" class="anchor">
+      <div class="sectionTitle reveal">
+        <div>
+          <h2>Portfolio</h2>
+          <p class="sub">Qui puoi mettere 3–6 lavori. Ogni card può aprire una pagina o un link esterno.</p>
+        </div>
+        <a class="btn" href="#contatti">Richiedi demo</a>
+      </div>
+
+      <div class="cards">
+        <article class="card reveal tilt">
+          <div class="badge">🚀 Landing</div>
+          <h3>Neon Shop</h3>
+          <p>Hero dinamico, pricing chiaro e checkout veloce.</p>
+        </article>
+        <article class="card reveal tilt">
+          <div class="badge">🧩 UI</div>
+          <h3>Dashboard 3D</h3>
+          <p>Card animate, hover “glass”, performance alta.</p>
+        </article>
+        <article class="card reveal tilt">
+          <div class="badge">🪐 Brand</div>
+          <h3>Identità Been</h3>
+          <p>Stile consistente su sito, social e banner.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contatti" class="anchor">
+      <div class="glass reveal" style="padding:18px;">
+        <div class="sectionTitle" style="margin:0;">
+          <div>
+            <h2>Contatti</h2>
+            <p class="sub">Metti qui il tuo link Discord e/o un form. (Ora è demo.)</p>
+          </div>
+          <a class="btn primary" href="https://discord.com/" target="_blank" rel="noreferrer">Entra su Discord →</a>
+        </div>
+
+        <div class="shine"></div>
+
+        <form onsubmit="event.preventDefault(); alert('Demo: collega qui un form vero (Formspree / backend).');"
+              style="display:grid; gap:10px; grid-template-columns: 1fr 1fr; margin-top:10px;">
+          <input required placeholder="Nome" style="grid-column: span 1; padding:12px 14px; border-radius:14px; border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.25); color: var(--text); outline:none;">
+          <input required placeholder="Email" type="email" style="grid-column: span 1; padding:12px 14px; border-radius:14px; border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.25); color: var(--text); outline:none;">
+          <textarea required placeholder="Descrivi cosa ti serve…" rows="4"
+            style="grid-column: 1 / -1; padding:12px 14px; border-radius:14px; border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.25); color: var(--text); outline:none; resize:vertical;"></textarea>
+          <button class="btn primary" style="grid-column: 1 / -1; justify-content:center;" type="submit">Invia richiesta</button>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container foot">
+        <div>© <span id="year"></span> Been 3D — La rivoluzione nel progetto.</div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <span class="pill">Instagram</span>
+          <span class="pill">TikTok</span>
+          <span class="pill">Discord</span>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script type="module">
+    // ---------- Helpers ----------
+    const qs = (s, p=document)=>p.querySelector(s);
+    const qsa = (s, p=document)=>[...p.querySelectorAll(s)];
+
+    // Smooth scroll for anchors
+    qsa('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        if(!id || id === '#') return;
+        const el = qs(id);
+        if(el){
+          e.preventDefault();
+          el.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      });
+    });
+
+    // Scroll reveal
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting) en.target.classList.add('show');
+      });
+    }, {threshold: 0.12});
+    qsa('.reveal').forEach(el=>io.observe(el));
+
+    // Tilt effect
+    function tiltify(el, intensity=10){
+      let rAF = null;
+      const rect = () => el.getBoundingClientRect();
+      function onMove(e){
+        const b = rect();
+        const x = (e.clientX - b.left) / b.width - 0.5;
+        const y = (e.clientY - b.top) / b.height - 0.5;
+        if(rAF) cancelAnimationFrame(rAF);
+        rAF = requestAnimationFrame(()=>{
+          el.style.transform = `rotateX(${(-y*intensity).toFixed(2)}deg) rotateY(${(x*intensity).toFixed(2)}deg) translateY(-2px)`;
+        });
+      }
+      function onLeave(){
+        if(rAF) cancelAnimationFrame(rAF);
+        el.style.transform = `rotateX(0deg) rotateY(0deg) translateY(0px)`;
+      }
+      el.addEventListener('mousemove', onMove);
+      el.addEventListener('mouseleave', onLeave);
+    }
+    const heroTilt = qs('#tiltHero');
+    if(heroTilt) tiltify(heroTilt, 10);
+    qsa('.tilt').forEach(el=>tiltify(el, 8));
+
+    // Year
+    qs('#year').textContent = new Date().getFullYear();
+
+    // ---------- Three.js 3D background ----------
+    import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+
+    const canvas = qs('#bg3d');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha:true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
+    camera.position.set(0, 0, 7);
+
+    const resize = ()=>{
+      const w = innerWidth, h = innerHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w/h;
+      camera.updateProjectionMatrix();
+    };
+    addEventListener('resize', resize);
+    resize();
+
+    // Lights
+    const key = new THREE.PointLight(0xa855f7, 2.0, 40);
+    key.position.set(-4, 3, 6);
+    scene.add(key);
+
+    const fill = new THREE.PointLight(0x22d3ee, 1.6, 40);
+    fill.position.set(5, -2, 7);
+    scene.add(fill);
+
+    const ambient = new THREE.AmbientLight(0xffffff, 0.25);
+    scene.add(ambient);
+
+    // Group of floating objects
+    const group = new THREE.Group();
+    scene.add(group);
+
+    // Material with subtle metal look
+    const mat = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      roughness: 0.28,
+      metalness: 0.85,
+      emissive: new THREE.Color(0x140a2a),
+      emissiveIntensity: 0.35
+    });
+
+    const geo1 = new THREE.IcosahedronGeometry(1.1, 1);
+    const geo2 = new THREE.TorusKnotGeometry(0.72, 0.22, 220, 22);
+    const geo3 = new THREE.OctahedronGeometry(0.9, 0);
+
+    const main = new THREE.Mesh(geo2, mat);
+    main.position.set(0.0, 0.2, 0.0);
+    group.add(main);
+
+    const orb1 = new THREE.Mesh(geo1, mat.clone());
+    orb1.scale.setScalar(0.55);
+    orb1.position.set(-2.2, -1.0, -0.8);
+    group.add(orb1);
+
+    const orb2 = new THREE.Mesh(geo3, mat.clone());
+    orb2.scale.setScalar(0.62);
+    orb2.position.set(2.3, 1.1, -1.2);
+    group.add(orb2);
+
+    // Tiny particles (points)
+    const pCount = 900;
+    const pos = new Float32Array(pCount * 3);
+    for(let i=0;i<pCount;i++){
+      const r = 10 * Math.random();
+      const t = Math.random() * Math.PI * 2;
+      const u = (Math.random() - 0.5) * 6;
+      pos[i*3+0] = Math.cos(t) * r;
+      pos[i*3+1] = u;
+      pos[i*3+2] = (Math.sin(t) * r) - 6;
+    }
+    const pGeo = new THREE.BufferGeometry();
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    const pMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.015, transparent:true, opacity: 0.55 });
+    const points = new THREE.Points(pGeo, pMat);
+    scene.add(points);
+
+    // Mouse parallax
+    let mx = 0, my = 0;
+    addEventListener('mousemove', (e)=>{
+      mx = (e.clientX / innerWidth) * 2 - 1;
+      my = (e.clientY / innerHeight) * 2 - 1;
+    });
+
+    // Scroll influence
+    let scrollY = 0;
+    addEventListener('scroll', ()=>{ scrollY = scrollY || 0; scrollY = window.scrollY; }, {passive:true});
+
+    const clock = new THREE.Clock();
+
+    function animate(){
+      const t = clock.getElapsedTime();
+
+      // subtle camera drift + mouse parallax
+      camera.position.x += (mx * 0.55 - camera.position.x) * 0.03;
+      camera.position.y += (-my * 0.35 - camera.position.y) * 0.03;
+      camera.lookAt(0,0,0);
+
+      // floating
+      group.rotation.y = t * 0.35;
+      group.rotation.x = Math.sin(t * 0.5) * 0.18;
+      main.rotation.z = t * 0.25;
+
+      orb1.position.y = -1.0 + Math.sin(t * 0.9) * 0.25;
+      orb2.position.y =  1.1 + Math.cos(t * 0.8) * 0.22;
+
+      // scroll-based z shift (parallax depth)
+      const z = -6 - Math.min(scrollY * 0.0012, 2.4);
+      points.position.z = z;
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>

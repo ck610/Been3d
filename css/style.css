@@ -1,0 +1,471 @@
+/* ======================================================
+   BEEN 3D — STYLE.CSS (PREMIUM 2025)
+====================================================== */
+
+/* ------------------ ROOT ------------------ */
+:root{
+  --bg:#05040a;
+  --card:rgba(255,255,255,.06);
+  --stroke:rgba(255,255,255,.14);
+  --text:rgba(255,255,255,.92);
+  --muted:rgba(255,255,255,.65);
+  --accent:#a855f7;
+  --accent2:#22d3ee;
+  --radius:22px;
+  --shadow:0 40px 140px rgba(0,0,0,.65);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  color:var(--text);
+  background:
+    radial-gradient(1200px 700px at 20% 10%, rgba(168,85,247,.22), transparent 60%),
+    radial-gradient(1200px 700px at 80% 20%, rgba(34,211,238,.18), transparent 60%),
+    var(--bg);
+  overflow-x:hidden;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+/* ------------------ BACKGROUND ------------------ */
+#bg3d{
+  position:fixed;
+  inset:0;
+  z-index:-3;
+}
+
+.noise{
+  pointer-events:none;
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;
+  opacity:.35;
+  z-index:-2;
+}
+
+/* ------------------ NAVBAR ------------------ */
+.nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  backdrop-filter:blur(18px);
+  background:linear-gradient(
+    90deg,
+    rgba(10,8,18,.9),
+    rgba(6,6,12,.8)
+  );
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.nav-wrap{
+  max-width:1200px;
+  margin:auto;
+  padding:14px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+/* BRAND */
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+  letter-spacing:.3px;
+}
+
+.brand span{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+/* LINKS */
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.nav-links a{
+  padding:8px 14px;
+  border-radius:999px;
+  font-weight:800;
+  font-size:13px;
+  color:rgba(255,255,255,.75);
+  transition:.25s ease;
+}
+
+.nav-links a:hover{
+  color:#fff;
+  background:rgba(255,255,255,.08);
+}
+
+/* SHOP */
+.nav-pill{
+  padding:8px 16px;
+  border-radius:999px;
+  font-weight:900;
+  background:linear-gradient(135deg,rgba(168,85,247,.25),rgba(34,211,238,.25));
+  border:1px solid rgba(168,85,247,.45);
+  box-shadow:0 0 28px rgba(168,85,247,.35);
+}
+
+/* ORDERS */
+.nav-orders{
+  padding:8px 14px;
+  border-radius:14px;
+  background:rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.14);
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  transition:.25s ease;
+}
+
+.nav-orders:hover{
+  background:rgba(168,85,247,.18);
+  border-color:rgba(168,85,247,.45);
+  box-shadow:0 0 30px rgba(168,85,247,.25);
+}
+
+/* ACTIONS */
+.nav-actions{
+  display:flex;
+  gap:12px;
+}
+
+/* ------------------ BUTTONS ------------------ */
+.btn{
+  padding:10px 16px;
+  border-radius:14px;
+  font-weight:900;
+  font-size:13px;
+  cursor:pointer;
+  transition:.25s ease;
+}
+
+.btn.ghost{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);
+}
+
+.btn.primary{
+  position:relative;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:none;
+  box-shadow:0 0 26px rgba(168,85,247,.5);
+  overflow:hidden;
+}
+
+.btn.primary::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255,255,255,.35),
+    transparent 70%
+  );
+  transform:translateX(-120%);
+}
+
+.btn.primary:hover::after{
+  animation:shine 1.2s ease;
+}
+
+@keyframes shine{
+  to{transform:translateX(120%)}
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+/* ------------------ LAYOUT ------------------ */
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:0 18px;
+}
+
+.hero{
+  position:relative;
+  padding:90px 0 40px;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:28px;
+  align-items:center;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:-80px;
+  background:
+    radial-gradient(600px 400px at 30% 20%, rgba(168,85,247,.28), transparent 60%),
+    radial-gradient(600px 400px at 70% 30%, rgba(34,211,238,.22), transparent 60%);
+  filter:blur(50px);
+  z-index:-1;
+}
+
+/* ------------------ TITLES ------------------ */
+h1{
+  font-size:clamp(44px,5vw,72px);
+  line-height:1.03;
+  letter-spacing:-1px;
+  margin:0;
+}
+
+.grad{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  color:transparent;
+  text-shadow:
+    0 0 40px rgba(168,85,247,.45),
+    0 0 80px rgba(34,211,238,.25);
+}
+
+.lead{
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.6;
+  max-width:56ch;
+}
+
+/* ------------------ GLASS CARD ------------------ */
+.glass{
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(16px);
+}
+
+/* ------------------ MINI KPI ------------------ */
+.mini{
+  padding:14px;
+  border-radius:14px;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.18);
+  transition:.3s ease;
+}
+
+.mini:hover{
+  transform:translateY(-4px);
+  box-shadow:0 20px 60px rgba(168,85,247,.25);
+}
+
+.kpi{
+  font-weight:900;
+  font-size:18px;
+  margin:0;
+}
+
+.kpiLabel{
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* ------------------ SECTIONS ------------------ */
+section{
+  padding:90px 0;
+}
+
+.sectionTitle{
+  margin-bottom:28px;
+}
+
+h2{
+  font-size:28px;
+  letter-spacing:-.4px;
+}
+
+.sub{
+  color:var(--muted);
+  max-width:65ch;
+}
+
+/* ------------------ CARDS ------------------ */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.card{
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:22px;
+  padding:22px;
+  position:relative;
+  transition:.35s cubic-bezier(.2,.9,.2,1);
+  box-shadow:
+    0 30px 90px rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:24px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  opacity:0;
+  filter:blur(20px);
+  z-index:-1;
+  transition:.35s ease;
+}
+
+.card:hover{
+  transform:translateY(-10px) scale(1.01);
+}
+
+.card:hover::before{
+  opacity:.35;
+}
+
+.badge{
+  display:inline-flex;
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+/* ------------------ FOOTER ------------------ */
+footer{
+  border-top:1px solid rgba(255,255,255,.08);
+  padding:40px 0 60px;
+  background:rgba(0,0,0,.15);
+  backdrop-filter:blur(10px);
+}
+
+.foot{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:16px;
+  color:var(--muted);
+}
+
+/* ------------------ RESPONSIVE ------------------ */
+@media(max-width:980px){
+  .hero{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+
+/* SHOP PREVIEW – single card refined */
+
+.shop-preview{
+  padding:26px 28px;
+  border-radius:26px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.28));
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:
+    0 40px 120px rgba(0,0,0,.65),
+    inset 0 0 0 1px rgba(255,255,255,.04);
+  backdrop-filter: blur(18px);
+  max-width:520px;
+}
+
+/* TITLE */
+.shop-preview h4{
+  margin:0 0 18px;
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:.4px;
+  color:rgba(255,255,255,.85);
+}
+
+/* LIST */
+.shop-list{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-bottom:22px;
+}
+
+/* ROW */
+.shop-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:14px;
+  color:rgba(255,255,255,.75);
+}
+
+/* NUMBER */
+.shop-row b{
+  font-size:20px;
+  font-weight:950;
+  color:#fff;
+  letter-spacing:-.6px;
+}
+
+/* DIVIDER */
+.shop-divider{
+  height:1px;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.18),
+    transparent
+  );
+  margin:6px 0;
+}
+
+/* LIVE BADGE */
+.shop-live{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:14px;
+  font-weight:800;
+}
+
+.shop-live .badge{
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12px;
+  background:rgba(34,211,238,.18);
+  border:1px solid rgba(34,211,238,.45);
+  color:#e0faff;
+  box-shadow:0 0 18px rgba(34,211,238,.6);
+}
+
+/* CTA */
+.shop-preview .btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 18px;
+  border-radius:14px;
+  font-weight:900;
+  background:linear-gradient(135deg,#a855f7,#22d3ee);
+  border:none;
+  color:#fff;
+  box-shadow:0 0 26px rgba(168,85,247,.55);
+  transition:.25s ease;
+}
+
+.shop-preview .btn:hover{
+  transform:translateY(-2px);
+}

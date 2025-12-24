@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manutenzione — Been 3D</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* =====================
+   MANUTENZIONE — BEEN 3D
+===================== */
+
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(900px 500px at 15% 10%, rgba(168,85,247,.18), transparent 60%),
+    radial-gradient(900px 500px at 85% 20%, rgba(34,211,238,.18), transparent 60%),
+    #05040a;
+  color:#fff;
+  text-align:center;
+}
+
+/* CARD */
+.maintenance{
+  max-width:560px;
+  padding:56px 42px;
+  border-radius:36px;
+  background:
+    linear-gradient(180deg,
+      rgba(255,255,255,.10),
+      rgba(0,0,0,.45)
+    );
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:
+    0 80px 220px rgba(168,85,247,.45);
+  position:relative;
+  overflow:hidden;
+  transform-style:preserve-3d;
+}
+
+/* glow */
+.maintenance::before{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius:40px;
+  background:linear-gradient(135deg,#a855f7,#22d3ee);
+  opacity:.22;
+  filter:blur(40px);
+  z-index:-1;
+}
+
+/* ICON */
+.maintenance-icon{
+  font-size:64px;
+  margin-bottom:20px;
+  animation:float 4s ease-in-out infinite;
+}
+
+/* TITLE */
+.maintenance h1{
+  margin:0 0 14px;
+  font-size:clamp(32px,4vw,44px);
+  background:linear-gradient(135deg,#ffffff,#c7b6ff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+/* TEXT */
+.maintenance p{
+  color:rgba(255,255,255,.75);
+  font-size:16px;
+  line-height:1.6;
+  margin:0 0 28px;
+}
+
+/* BADGE */
+.badge{
+  display:inline-block;
+  padding:8px 16px;
+  border-radius:999px;
+  background:rgba(0,0,0,.45);
+  border:1px solid rgba(255,255,255,.22);
+  font-weight:800;
+  font-size:13px;
+  margin-bottom:26px;
+}
+
+/* BUTTON */
+.maintenance .btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px 26px;
+  border-radius:999px;
+  font-weight:900;
+  background:linear-gradient(135deg,#a855f7,#22d3ee);
+  color:#fff;
+  border:none;
+  cursor:pointer;
+  text-decoration:none;
+  box-shadow:0 0 40px rgba(168,85,247,.6);
+  animation:pulse 3s ease-in-out infinite;
+}
+
+/* FOOT */
+.maintenance small{
+  display:block;
+  margin-top:26px;
+  color:rgba(255,255,255,.45);
+  font-size:13px;
+}
+
+/* ANIMATIONS */
+@keyframes float{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-10px); }
+}
+
+@keyframes pulse{
+  0%,100%{ box-shadow:0 0 30px rgba(168,85,247,.5); }
+  50%{ box-shadow:0 0 70px rgba(34,211,238,.7); }
+}
+</style>
+</head>
+
+<body>
+
+  <div class="maintenance">
+    <div class="maintenance-icon">🛠️</div>
+
+    <span class="badge">Manutenzione in corso</span>
+
+    <h1>Torneremo presto</h1>
+
+    <p>
+      Stiamo lavorando per migliorare l’esperienza Been 3D.<br>
+      Il sito sarà di nuovo online a breve.
+    </p>
+
+    <a class="btn" href="https://t.me/ck_anto" target="_blank">
+      💬 Contattaci su Telegram
+    </a>
+
+    <small>© <span id="year"></span> Been 3D</small>
+  </div>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>

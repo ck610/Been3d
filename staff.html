@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Been 3D — Staff Panel</title>
+
+<style>
+:root{
+  --bg:#05040a;
+  --card:rgba(255,255,255,.06);
+  --border:rgba(255,255,255,.14);
+  --text:#fff;
+  --muted:rgba(255,255,255,.6);
+  --accent:#a855f7;
+  --accent2:#22d3ee;
+  --radius:18px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui;
+  background:
+    radial-gradient(900px 500px at 20% 10%, rgba(168,85,247,.18), transparent 60%),
+    radial-gradient(900px 500px at 80% 20%, rgba(34,211,238,.14), transparent 60%),
+    var(--bg);
+  color:var(--text);
+}
+.app{display:grid;grid-template-columns:270px 1fr;min-height:100vh}
+.sidebar{
+  background:rgba(0,0,0,.45);
+  border-right:1px solid var(--border);
+  padding:22px;
+  backdrop-filter: blur(12px);
+}
+.brand{font-weight:900;font-size:20px;margin-bottom:14px}
+.userbox{
+  padding:12px;border-radius:14px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.10);
+  margin-bottom:14px;
+  color:var(--muted);
+  font-size:13px;
+}
+.userbox strong{color:#fff}
+.nav button{
+  width:100%;
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid transparent;
+  background:none;
+  color:#fff;
+  font-weight:800;
+  text-align:left;
+  cursor:pointer;
+  margin-bottom:8px;
+  transition:.2s;
+}
+.nav button:hover,.nav button.active{
+  background:var(--card);
+  border-color:var(--border);
+}
+.content{padding:36px 20px;max-width:1100px}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:0 30px 120px rgba(0,0,0,.5);
+}
+h1,h2,h3{margin:0 0 10px}
+p{margin:0 0 10px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+input,select{
+  width:100%;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:rgba(0,0,0,.35);
+  color:#fff;
+}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.btn{
+  padding:10px 14px;
+  border-radius:14px;
+  font-weight:900;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  cursor:pointer;
+  transition:.2s;
+}
+.btn.primary{border:none;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.btn:hover{transform:translateY(-1px)}
+.badge{
+  display:flex;gap:10px;align-items:center;justify-content:space-between;
+  padding:10px 12px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.25);
+  margin-top:10px;
+}
+.small{font-size:12px;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:1000px){.app{grid-template-columns:1fr}.sidebar{position:sticky;top:0}.kpis{grid-template-columns:repeat(2,1fr)}}
+.panel{display:none}
+.panel.active{display:block}
+
+/* LOGIN MODAL */
+.overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.65);
+  display:flex;align-items:center;justify-content:center;
+  z-index:9999;
+}
+.modal{
+  width:min(520px,92vw);
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 40px 140px rgba(0,0,0,.7);
+  backdrop-filter: blur(14px);
+}
+hr{border:none;border-top:1px solid rgba(255,255,255,.10);margin:14px 0}
+.table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0 10px;
+}
+.table td,.table th{padding:10px 12px;text-align:left}
+.table tr{
+  background:rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.12);
+}
+.table tr td:first-child,.table tr th:first-child{border-radius:14px 0 0 14px}
+.table tr td:last-child,.table tr th:last-child{border-radius:0 14px 14px 0}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="loginOverlay" class="overlay" style="display:none">
+  <div class="modal">
+    <h2>🔐 Login Staff</h2>
+    <p>Accedi per gestire Been 3D.</p>
+    <div class="grid">
+      <input id="loginUser" placeholder="Username">
+      <input id="loginPass" placeholder="Password" type="password">
+    </div>
+    <div class="row">
+      <button class="btn primary" onclick="doLogin()">Entra</button>
+      <button class="btn" onclick="seedAdmin(); alert('Admin creato (se non esiste già)')">Crea Admin default</button>
+    </div>
+    <p class="small" style="margin-top:10px">Default (prima volta): admin / admin123</p>
+  </div>
+</div>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">🎛️ Been 3D</div>
+    <div class="userbox">
+      <div><strong id="who">—</strong> <span id="role" class="small"></span></div>
+      <div class="small" id="sessInfo">—</div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" onclick="logout()">Logout</button>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="active" data-panel="dashboard" onclick="openPanel('dashboard', this)">Dashboard</button>
+      <button data-panel="orders" onclick="openPanel('orders', this)">Ordini</button>
+      <button data-panel="coupons" onclick="openPanel('coupons', this)">Coupon</button>
+      <button data-panel="prices" onclick="openPanel('prices', this)" data-admin="1">Prezzi & Sconti</button>
+      <button data-panel="staff" onclick="openPanel('staff', this)" data-admin="1">Staff</button>
+      <button data-panel="audit" onclick="openPanel('audit', this)" data-admin="1">Storico Modifiche</button>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <section id="dashboard" class="panel active">
+      <div class="card">
+        <h1>Dashboard</h1>
+        <p>Gestisci ordini, coupon, staff e prezzi. (Demo frontend)</p>
+        <div class="kpis">
+          <div class="card">
+            <h3 id="kpiOrders">0</h3><p>Ordini totali</p>
+          </div>
+          <div class="card">
+            <h3 id="kpiNew">0</h3><p>Nuovi</p>
+          </div>
+          <div class="card">
+            <h3 id="kpiPaid">0</h3><p>Pagati</p>
+          </div>
+          <div class="card">
+            <h3 id="kpiRevenue">€0</h3><p>Totale (demo)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="orders" class="panel">
+      <div class="card">
+        <h2>📦 Ordini</h2>
+        <p>Creati dallo shop automaticamente.</p>
+        <div class="row">
+          <button class="btn" onclick="exportOrders()">Esporta JSON</button>
+          <button class="btn" onclick="clearOrders()">Svuota (admin)</button>
+        </div>
+        <div id="ordersList"></div>
+      </div>
+    </section>
+
+    <section id="coupons" class="panel">
+      <div class="card">
+        <h2>🏷️ Coupon</h2>
+        <div class="grid">
+          <input id="cCode" placeholder="Codice (BEEN10)">
+          <input id="cDiscount" type="number" placeholder="Sconto %">
+          <input id="cLimit" type="number" placeholder="Utilizzi max (vuoto = ∞)">
+          <input id="cExpire" type="date">
+        </div>
+        <div class="row">
+          <button class="btn primary" onclick="createCoupon()">Crea coupon</button>
+        </div>
+        <div id="couponList"></div>
+      </div>
+    </section>
+
+    <section id="prices" class="panel">
+      <div class="card">
+        <h2>💰 Prezzi & Sconti (Admin)</h2>
+        <h3>Prezzi (€)</h3>
+        <div class="grid">
+          <input id="price_sito_basic" placeholder="Sito Web Basic">
+          <input id="price_sito_pro" placeholder="Sito Web Pro">
+          <input id="price_video_basic" placeholder="Video Editing Base">
+          <input id="price_video_pro" placeholder="Video Editing Pro">
+          <input id="price_grafica" placeholder="Grafica (Logo & Banner)">
+        </div>
+
+        <h3 style="margin-top:16px">Sconti (%)</h3>
+        <div class="grid">
+          <input id="disc_sito_basic" placeholder="Sconto Sito Basic">
+          <input id="disc_sito_pro" placeholder="Sconto Sito Pro">
+          <input id="disc_video_basic" placeholder="Sconto Video Base">
+          <input id="disc_video_pro" placeholder="Sconto Video Pro">
+          <input id="disc_grafica" placeholder="Sconto Grafica">
+        </div>
+
+        <div class="row">
+          <button class="btn primary" onclick="savePricesDiscounts()">Salva</button>
+          <button class="btn" onclick="resetPricesDiscounts()">Reset (admin)</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="staff" class="panel">
+      <div class="card">
+        <h2>👥 Staff (Admin)</h2>
+        <div class="grid">
+          <input id="sUser" placeholder="Username">
+          <input id="sPass" placeholder="Password" type="password">
+          <select id="sRole">
+            <option value="admin">Admin</option>
+            <option value="staff">Staff</option>
+          </select>
+        </div>
+        <div class="row">
+          <button class="btn primary" onclick="addUser()">Aggiungi utente</button>
+        </div>
+        <div id="staffList"></div>
+        <hr>
+        <h3>Cambia password (tu)</h3>
+        <div class="grid">
+          <input id="meOld" placeholder="Vecchia password" type="password">
+          <input id="meNew" placeholder="Nuova password" type="password">
+        </div>
+        <div class="row">
+          <button class="btn" onclick="changeMyPassword()">Aggiorna password</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="audit" class="panel">
+      <div class="card">
+        <h2>🧾 Storico Modifiche (Admin)</h2>
+        <p>Registra azioni: prezzi, sconti, coupon, ordini, staff.</p>
+        <div class="row">
+          <button class="btn" onclick="exportAudit()">Esporta JSON</button>
+          <button class="btn" onclick="clearAudit()">Svuota (admin)</button>
+        </div>
+        <div id="auditList"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+/* ========= STORAGE KEYS ========= */
+const K_USERS = "been3d_users";
+const K_SESSION = "been3d_session";
+const K_ORDERS = "been3d_orders";
+const K_AUDIT = "been3d_audit";
+const K_PRICES = "prices";
+const K_DISCOUNTS = "discounts";
+const K_COUPONS = "coupons";
+
+/* ========= BASIC HELPERS ========= */
+const nowISO = ()=>new Date().toISOString();
+const money = (n)=>`€${Math.round((+n||0)*100)/100}`;
+const getJSON = (k, def)=>{ try{ return JSON.parse(localStorage.getItem(k) || JSON.stringify(def)); }catch{ return def; } };
+const setJSON = (k, v)=>localStorage.setItem(k, JSON.stringify(v));
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g,m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m])); }
+
+/* ========= SEED ADMIN ========= */
+function seedAdmin(){
+  const users = getJSON(K_USERS, []);
+  const exists = users.some(u=>u.username==="admin");
+  if(!exists){
+    users.push({ username:"admin", pass:"admin123", role:"admin", createdAt: nowISO() });
+    setJSON(K_USERS, users);
+  }
+}
+
+/* ========= AUTH ========= */
+function requireLogin(){
+  seedAdmin();
+  const sess = getJSON(K_SESSION, null);
+  if(!sess || !sess.username){
+    document.getElementById("loginOverlay").style.display="flex";
+    return false;
+  }
+  document.getElementById("loginOverlay").style.display="none";
+  return true;
+}
+
+function doLogin(){
+  const u = (loginUser.value||"").trim();
+  const p = (loginPass.value||"").trim();
+  const users = getJSON(K_USERS, []);
+  const found = users.find(x=>x.username===u && x.pass===p);
+  if(!found){ alert("Credenziali errate"); return; }
+  setJSON(K_SESSION, { username:found.username, role:found.role, loginAt: nowISO() });
+  audit("LOGIN", `Accesso: ${found.username} (${found.role})`);
+  location.reload();
+}
+
+function logout(){
+  const sess = getJSON(K_SESSION, null);
+  if(sess?.username) audit("LOGOUT", `Uscita: ${sess.username}`);
+  localStorage.removeItem(K_SESSION);
+  location.reload();
+}
+
+function session(){
+  return getJSON(K_SESSION, null);
+}
+function isAdmin(){
+  return session()?.role === "admin";
+}
+
+/* ========= PANELS + PERMISSIONS ========= */
+function openPanel(id, btn){
+  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  if(btn) btn.classList.add("active");
+  if(id==="orders") renderOrders();
+  if(id==="coupons") renderCoupons();
+  if(id==="prices") loadPricesDiscounts();
+  if(id==="staff") renderStaff();
+  if(id==="audit") renderAudit();
+}
+
+function applyPermissionsUI(){
+  const sess = session();
+  who.textContent = sess.username;
+  role.textContent = `(${sess.role})`;
+  sessInfo.textContent = `Login: ${new Date(sess.loginAt).toLocaleString()}`;
+
+  document.querySelectorAll("[data-admin='1']").forEach(b=>{
+    b.style.display = isAdmin() ? "block" : "none";
+  });
+}
+
+/* ========= AUDIT ========= */
+function audit(type, message){
+  const sess = getJSON(K_SESSION, {username:"?"});
+  const log = getJSON(K_AUDIT, []);
+  log.unshift({
+    at: nowISO(),
+    user: sess.username || "?",
+    role: sess.role || "?",
+    type,
+    message
+  });
+  setJSON(K_AUDIT, log.slice(0, 500)); // max 500
+}
+
+function renderAudit(){
+  const log = getJSON(K_AUDIT, []);
+  auditList.innerHTML = log.length ? log.map(a=>`
+    <div class="badge">
+      <div>
+        <div><strong>${escapeHtml(a.type)}</strong> — ${escapeHtml(a.message)}</div>
+        <div class="small">${escapeHtml(a.user)} • ${escapeHtml(a.role)} • ${new Date(a.at).toLocaleString()}</div>
+      </div>
+    </div>
+  `).join("") : `<p class="small">Nessuna modifica registrata.</p>`;
+}
+function exportAudit(){
+  const log = getJSON(K_AUDIT, []);
+  navigator.clipboard.writeText(JSON.stringify(log,null,2));
+  alert("Audit copiato negli appunti (JSON).");
+}
+function clearAudit(){
+  if(!isAdmin()) return alert("Solo admin.");
+  if(confirm("Svuotare storico modifiche?")){
+    setJSON(K_AUDIT, []);
+    renderAudit();
+  }
+}
+
+/* ========= PRICES + DISCOUNTS ========= */
+function loadPricesDiscounts(){
+  if(!isAdmin()) return;
+  const p = getJSON(K_PRICES, {});
+  const d = getJSON(K_DISCOUNTS, {});
+  price_sito_basic.value = p.sito_basic ?? "";
+  price_sito_pro.value = p.sito_pro ?? "";
+  price_video_basic.value = p.video_basic ?? "";
+  price_video_pro.value = p.video_pro ?? "";
+  price_grafica.value = p.grafica ?? "";
+
+  disc_sito_basic.value = d.sito_basic ?? "";
+  disc_sito_pro.value = d.sito_pro ?? "";
+  disc_video_basic.value = d.video_basic ?? "";
+  disc_video_pro.value = d.video_pro ?? "";
+  disc_grafica.value = d.grafica ?? "";
+}
+
+function savePricesDiscounts(){
+  if(!isAdmin()) return alert("Solo admin.");
+  const prices = {
+    sito_basic:+price_sito_basic.value||0,
+    sito_pro:+price_sito_pro.value||0,
+    video_basic:+price_video_basic.value||0,
+    video_pro:+price_video_pro.value||0,
+    grafica:+price_grafica.value||0
+  };
+  const discounts = {
+    sito_basic:+disc_sito_basic.value||0,
+    sito_pro:+disc_sito_pro.value||0,
+    video_basic:+disc_video_basic.value||0,
+    video_pro:+disc_video_pro.value||0,
+    grafica:+disc_grafica.value||0
+  };
+  setJSON(K_PRICES, prices);
+  setJSON(K_DISCOUNTS, discounts);
+  audit("PRICING", "Aggiornati prezzi/sconti prodotti");
+  alert("Salvato. Apri shop.html e vedrai i nuovi prezzi.");
+}
+
+function resetPricesDiscounts(){
+  if(!isAdmin()) return alert("Solo admin.");
+  if(confirm("Resettare prezzi e sconti?")){
+    localStorage.removeItem(K_PRICES);
+    localStorage.removeItem(K_DISCOUNTS);
+    audit("PRICING_RESET", "Reset prezzi/sconti");
+    loadPricesDiscounts();
+  }
+}
+
+/* ========= COUPONS (advanced: limit, expire, used, active) ========= */
+function coupons(){ return getJSON(K_COUPONS, []); }
+function saveCoupons(list){ setJSON(K_COUPONS, list); }
+function createCoupon(){
+  const code = (cCode.value||"").trim().toUpperCase();
+  const discount = +cDiscount.value||0;
+  const limit = cLimit.value ? +cLimit.value : null;
+  const expire = cExpire.value ? cExpire.value : null;
+
+  if(!code || discount<=0) return alert("Inserisci codice e sconto valido.");
+  const list = coupons();
+  if(list.some(c=>c.code===code)) return alert("Codice già esistente.");
+
+  list.unshift({ code, discount, limit, used:0, expire, active:true, createdAt: nowISO() });
+  saveCoupons(list);
+  audit("COUPON_CREATE", `Creato coupon ${code} (-${discount}%)`);
+  renderCoupons();
+  cCode.value=""; cDiscount.value=""; cLimit.value=""; cExpire.value="";
+}
+
+function toggleCoupon(code){
+  const list = coupons().map(c=>c.code===code ? ({...c, active:!c.active}) : c);
+  saveCoupons(list);
+  audit("COUPON_TOGGLE", `Toggle coupon ${code}`);
+  renderCoupons();
+}
+function deleteCoupon(code){
+  if(!isAdmin()) return alert("Solo admin può eliminare.");
+  const list = coupons().filter(c=>c.code!==code);
+  saveCoupons(list);
+  audit("COUPON_DELETE", `Eliminato coupon ${code}`);
+  renderCoupons();
+}
+function renderCoupons(){
+  const list = coupons();
+  couponList.innerHTML = list.length ? list.map(c=>{
+    const exp = c.expire ? `Scade: ${c.expire}` : "No scadenza";
+    const lim = c.limit ? `${c.used}/${c.limit}` : `${c.used}/∞`;
+    return `
+      <div class="badge">
+        <div>
+          <div><strong>${escapeHtml(c.code)}</strong> — -${c.discount}% • ${escapeHtml(lim)} • ${escapeHtml(exp)}</div>
+          <div class="small">Stato: ${c.active?"ON":"OFF"}</div>
+        </div>
+        <div class="row" style="margin:0">
+          <button class="btn" onclick="toggleCoupon('${c.code}')">${c.active?"Disattiva":"Attiva"}</button>
+          <button class="btn" onclick="deleteCoupon('${c.code}')">Elimina</button>
+        </div>
+      </div>
+    `;
+  }).join("") : `<p class="small">Nessun coupon.</p>`;
+}
+
+/* ========= USERS / STAFF ========= */
+function users(){ return getJSON(K_USERS, []); }
+function saveUsers(list){ setJSON(K_USERS, list); }
+
+function addUser(){
+  if(!isAdmin()) return alert("Solo admin.");
+  const username = (sUser.value||"").trim();
+  const pass = (sPass.value||"").trim();
+  const role = sRole.value;
+
+  if(username.length<3 || pass.length<4) return alert("Username min 3, password min 4.");
+  const list = users();
+  if(list.some(u=>u.username===username)) return alert("Username già esistente.");
+
+  list.push({ username, pass, role, createdAt: nowISO() });
+  saveUsers(list);
+  audit("STAFF_ADD", `Creato utente ${username} (${role})`);
+  renderStaff();
+  sUser.value=""; sPass.value=""; sRole.value="staff";
+}
+
+function removeUser(username){
+  if(!isAdmin()) return alert("Solo admin.");
+  if(username==="admin") return alert("Non puoi eliminare admin.");
+  const list = users().filter(u=>u.username!==username);
+  saveUsers(list);
+  audit("STAFF_REMOVE", `Rimosso utente ${username}`);
+  renderStaff();
+}
+
+function renderStaff(){
+  const list = users();
+  staffList.innerHTML = list.map(u=>`
+    <div class="badge">
+      <div>
+        <div><strong>${escapeHtml(u.username)}</strong> — ${escapeHtml(u.role)}</div>
+        <div class="small">Creato: ${new Date(u.createdAt).toLocaleString()}</div>
+      </div>
+      <div class="row" style="margin:0">
+        <button class="btn" onclick="removeUser('${u.username}')">Elimina</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function changeMyPassword(){
+  const sess = session();
+  const oldP = (meOld.value||"").trim();
+  const newP = (meNew.value||"").trim();
+  if(newP.length<4) return alert("Password min 4.");
+
+  const list = users();
+  const me = list.find(u=>u.username===sess.username);
+  if(!me || me.pass!==oldP) return alert("Vecchia password errata.");
+
+  me.pass = newP;
+  saveUsers(list);
+  audit("PASSWORD", `Password aggiornata per ${sess.username}`);
+  alert("Password aggiornata.");
+  meOld.value=""; meNew.value="";
+}
+
+/* ========= ORDERS ========= */
+function orders(){ return getJSON(K_ORDERS, []); }
+function saveOrders(list){ setJSON(K_ORDERS, list); }
+
+function renderOrders(){
+  const list = orders();
+  ordersList.innerHTML = list.length ? list.map(o=>{
+    const items = o.items.map(it=>`${escapeHtml(it.name)} (${money(it.price)})`).join(", ");
+    return `
+      <div class="badge" style="align-items:flex-start">
+        <div>
+          <div><strong>#${escapeHtml(o.id)}</strong> — ${escapeHtml(o.status)} • ${money(o.total)}</div>
+          <div class="small">${new Date(o.createdAt).toLocaleString()} • ${escapeHtml(o.customerEmail||"—")} • Coupon: ${escapeHtml(o.coupon||"—")}</div>
+          <div class="small">Prodotti: ${items}</div>
+          <div class="small">Note: ${escapeHtml(o.note||"—")}</div>
+        </div>
+        <div style="min-width:240px">
+          <select id="st_${o.id}" style="margin-bottom:8px">
+            ${["Nuovo","In lavorazione","In attesa pagamento","Pagato","Consegnato","Annullato"].map(s=>`<option ${o.status===s?"selected":""}>${s}</option>`).join("")}
+          </select>
+          <div class="row" style="margin:0">
+            <button class="btn primary" onclick="updateOrderStatus('${o.id}')">Aggiorna</button>
+            <button class="btn" onclick="deleteOrder('${o.id}')">Elimina</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("") : `<p class="small">Nessun ordine ancora.</p>`;
+
+  refreshKPIs();
+}
+
+function updateOrderStatus(id){
+  const list = orders();
+  const idx = list.findIndex(o=>o.id===id);
+  if(idx<0) return;
+  const sel = document.getElementById(`st_${id}`);
+  const newStatus = sel.value;
+  const old = list[idx].status;
+  list[idx].status = newStatus;
+  list[idx].updatedAt = nowISO();
+  saveOrders(list);
+  audit("ORDER_STATUS", `Ordine #${id}: ${old} → ${newStatus}`);
+  renderOrders();
+}
+
+function deleteOrder(id){
+  if(!isAdmin()) return alert("Solo admin può eliminare.");
+  const list = orders().filter(o=>o.id!==id);
+  saveOrders(list);
+  audit("ORDER_DELETE", `Eliminato ordine #${id}`);
+  renderOrders();
+}
+
+function exportOrders(){
+  const list = orders();
+  navigator.clipboard.writeText(JSON.stringify(list,null,2));
+  alert("Ordini copiati negli appunti (JSON).");
+}
+
+function clearOrders(){
+  if(!isAdmin()) return alert("Solo admin.");
+  if(confirm("Svuotare tutti gli ordini?")){
+    saveOrders([]);
+    audit("ORDER_CLEAR", "Svuotati ordini");
+    renderOrders();
+  }
+}
+
+/* ========= KPI ========= */
+function refreshKPIs(){
+  const list = orders();
+  const total = list.length;
+  const nieuw = list.filter(o=>o.status==="Nuovo").length;
+  const paid = list.filter(o=>o.status==="Pagato" || o.status==="Consegnato").length;
+  const revenue = list.reduce((sum,o)=>sum + (+o.total||0), 0);
+
+  kpiOrders.textContent = total;
+  kpiNew.textContent = nieuw;
+  kpiPaid.textContent = paid;
+  kpiRevenue.textContent = money(revenue);
+}
+
+/* ========= INIT ========= */
+seedAdmin();
+if(!requireLogin()) {
+  // stop render
+} else {
+  applyPermissionsUI();
+  renderCoupons();
+  renderOrders();
+  renderStaff();
+  renderAudit();
+  loadPricesDiscounts();
+}
+</script>
+
+</body>
+</html>

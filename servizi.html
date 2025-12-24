@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Servizi | Reel Maker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">Reel Maker</div>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="servizi.html">Servizi</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="contatti.html">Contatti</a></li>
+
+    <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
+      <li class="staff-tools">
+        <a href="staff.php">🛠️ Staff</a>
+      </li>
+    <?php endif; ?>
+  </ul>
+</nav>
+
+
+<!-- HERO SERVIZI -->
+<section class="hero hero-services">
+  <div class="hero-bg"></div>
+
+  <h1 class="fade-up">I nostri servizi</h1>
+  <p class="fade-up delay">
+    Soluzioni digitali complete per far crescere il tuo brand online.
+  </p>
+
+  <div class="service-buttons fade-up delay-2">
+    <a href="#web" class="service-btn">🌐 Siti Web</a>
+    <a href="#branding" class="service-btn">🎨 Grafica & Logo</a>
+    <a href="#video" class="service-btn">🎬 Video Editing</a>
+  </div>
+</section>
+
+<!-- WEB DESIGN -->
+<section class="section reveal" id="web">
+  <div class="grid">
+    <div class="card reveal-item">
+      <h3>🌐 Web Design & Siti Web</h3>
+      <p>
+        Progettiamo siti web moderni, veloci e ottimizzati per la conversione.
+        Ogni sito è pensato per rappresentare al meglio il tuo brand.
+      </p>
+      <ul class="service-list">
+        <li>✔️ Siti vetrina professionali</li>
+        <li>✔️ Landing page</li>
+        <li>✔️ UI/UX design</li>
+        <li>✔️ Responsive mobile</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDING -->
+<section class="section dark reveal" id="branding">
+  <div class="grid">
+    <div class="card reveal-item">
+      <h3>🎨 Branding & Grafica</h3>
+      <p>
+        Creiamo identità visive forti e riconoscibili che comunicano
+        professionalità e valore.
+      </p>
+      <ul class="service-list">
+        <li>✔️ Logo design</li>
+        <li>✔️ Brand identity</li>
+        <li>✔️ Grafiche social</li>
+        <li>✔️ Palette colori & font</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO EDITING -->
+<section class="section reveal" id="video">
+  <div class="grid">
+    <div class="card reveal-item">
+      <h3>🎬 Video Editing & Reel</h3>
+      <p>
+        Video dinamici e coinvolgenti pensati per social media e campagne online.
+        Ottimizzati per catturare l’attenzione.
+      </p>
+      <ul class="service-list">
+        <li>✔️ Reel Instagram / TikTok</li>
+        <li>✔️ Video promozionali</li>
+        <li>✔️ Editing professionale</li>
+        <li>✔️ Montaggio ottimizzato per social</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-ultra reveal">
+  <div class="cta-inner">
+    <span class="cta-tag">REEL MAKER</span>
+    <h2 class="cta-title">
+      Scegli il piano giusto per il tuo <span>brand</span>
+    </h2>
+    <p class="cta-sub">
+      Scopri i nostri pacchetti e inizia subito il tuo progetto.
+    </p>
+    <a href="shop.html" class="cta-btn-pro">Vai allo shop →</a>
+  </div>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+</section>
+
+<footer>
+  © 2025 Reel Maker
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

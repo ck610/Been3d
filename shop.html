@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shop — Been 3D</title>
+
+<style>
+:root{
+  --bg:#05040a;
+  --card:rgba(255,255,255,.06);
+  --border:rgba(255,255,255,.14);
+  --text:#fff;
+  --muted:rgba(255,255,255,.65);
+  --accent:#a855f7;
+  --accent2:#22d3ee;
+  --radius:22px;
+  --shadow:0 40px 140px rgba(0,0,0,.65);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui;
+  background:
+    radial-gradient(1000px 600px at 15% 10%, rgba(168,85,247,.22), transparent 60%),
+    radial-gradient(1000px 600px at 85% 20%, rgba(34,211,238,.18), transparent 60%),
+    var(--bg);
+  color:var(--text);
+}
+a{text-decoration:none;color:inherit}
+.nav{
+  position:sticky;top:0;z-index:10;
+  backdrop-filter:blur(16px);
+  background:rgba(5,4,10,.65);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.nav-wrap{
+  max-width:1100px;margin:auto;padding:14px 20px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.brand{font-weight:900;font-size:18px}
+.brand span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;color:transparent}
+.btn{
+  padding:10px 16px;border-radius:14px;font-weight:900;
+  border:1px solid var(--border);background:var(--card);
+  cursor:pointer;transition:.25s;
+}
+.btn.primary{border:none;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.btn:hover{transform:translateY(-2px)}
+.container{max-width:1000px;margin:auto;padding:60px 20px}
+h1{text-align:center;font-size:52px;margin:0 0 12px;letter-spacing:-.7px}
+.subtitle{text-align:center;color:var(--muted);max-width:60ch;margin:0 auto 70px}
+.section{margin-bottom:110px;position:relative}
+.section::before{
+  content:"";position:absolute;inset:-40px;
+  background:radial-gradient(500px 200px at 50% 0%, rgba(168,85,247,.18), transparent 70%);
+  z-index:-1;
+}
+.section-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:40px;box-shadow:var(--shadow);
+}
+.section h2{font-size:32px;margin:10px 0 6px}
+.section p{color:var(--muted);max-width:60ch;margin:0 0 12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:30px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.product{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:20px;
+  padding:30px;
+  transition:.35s ease;
+  transform-style:preserve-3d;
+}
+.product:hover{transform:translateY(-10px) rotateX(3deg) rotateY(-3deg);border-color:rgba(168,85,247,.45)}
+.badge{
+  display:inline-flex;padding:6px 12px;border-radius:999px;
+  background:rgba(0,0,0,.4);border:1px solid var(--border);
+  font-size:12px;font-weight:900;margin-bottom:10px;
+}
+.price{font-size:40px;font-weight:900;margin:16px 0 6px}
+.per{color:var(--muted);font-size:13px}
+ul{padding-left:18px;line-height:1.7;color:var(--muted)}
+.actions{display:flex;gap:14px;margin-top:22px}
+.actions .btn{flex:1;text-align:center}
+footer{border-top:1px solid rgba(255,255,255,.08);padding:30px;text-align:center;color:var(--muted)}
+
+/* CHECKOUT MODAL */
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.65);
+  display:none;align-items:center;justify-content:center;z-index:9999;
+}
+.modal{
+  width:min(680px,92vw);
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 40px 140px rgba(0,0,0,.7);
+  backdrop-filter: blur(14px);
+}
+hr{border:none;border-top:1px solid rgba(255,255,255,.10);margin:14px 0}
+.input{
+  width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.35);color:#fff;
+}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.small{font-size:12px;color:var(--muted)}
+</style>
+</head>
+
+<body>
+<header class="nav">
+  <div class="nav-wrap">
+    <div class="brand">Been <span>3D</span> — Shop</div>
+    <a class="btn" href="index.html">← Torna al sito</a>
+  </div>
+</header>
+
+<main class="container">
+  <h1>I nostri servizi</h1>
+  <p class="subtitle">Prezzi e sconti gestiti dal pannello staff.</p>
+
+  <!-- SITI WEB -->
+  <section class="section">
+    <div class="section-card">
+      <span class="badge">🌐 SITI WEB</span>
+      <h2>Siti Web</h2>
+      <p>Siti progettati da zero, moderni, veloci e pensati per convertire.</p>
+
+      <div class="grid">
+        <div class="product">
+          <span class="badge">BASIC</span>
+          <h3>Sito Web Basic</h3>
+          <p class="price" id="price-sito-basic">€—</p>
+          <p class="per">una tantum</p>
+          <ul>
+            <li>Landing 1 pagina</li>
+            <li>Design moderno</li>
+            <li>Responsive</li>
+            <li>Modulo contatti</li>
+          </ul>
+          <div class="actions">
+            <button class="btn primary" onclick="buy('sito_basic','Sito Web Basic')">Acquista</button>
+          </div>
+        </div>
+
+        <div class="product">
+          <span class="badge">🔥 CONSIGLIATO</span>
+          <h3>Sito Web Pro</h3>
+          <p class="price" id="price-sito-pro">€—</p>
+          <p class="per">una tantum</p>
+          <ul>
+            <li>Sito multi-pagina</li>
+            <li>Animazioni moderne</li>
+            <li>SEO base</li>
+            <li>CTA conversioni</li>
+          </ul>
+          <div class="actions">
+            <button class="btn primary" onclick="buy('sito_pro','Sito Web Pro')">Acquista</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRAFICA -->
+  <section class="section">
+    <div class="section-card">
+      <span class="badge">🎨 GRAFICA</span>
+      <h2>Logo & Banner</h2>
+      <p>Identità visiva professionale per brand coerente su web e social.</p>
+
+      <div class="grid">
+        <div class="product" style="grid-column:1/-1">
+          <span class="badge">PACK</span>
+          <h3>Grafica (Logo & Banner)</h3>
+          <p class="price" id="price-grafica">€—</p>
+          <p class="per">pacchetto</p>
+          <ul>
+            <li>Logo professionale</li>
+            <li>Banner social / web</li>
+            <li>Brand identity coerente</li>
+            <li>File pronti all’uso</li>
+          </ul>
+          <div class="actions" style="max-width:420px">
+            <button class="btn primary" onclick="buy('grafica','Grafica (Logo & Banner)')">Acquista</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <section class="section">
+    <div class="section-card">
+      <span class="badge">🎬 VIDEO EDITING</span>
+      <h2>Video Editing</h2>
+      <p>Editing professionale ottimizzato per social e advertising.</p>
+
+      <div class="grid">
+        <div class="product">
+          <h3>Video Editing Base</h3>
+          <p class="price" id="price-video-basic">€—</p>
+          <p class="per">per video</p>
+          <ul>
+            <li>Montaggio professionale</li>
+            <li>Tagli puliti</li>
+            <li>Formato social</li>
+          </ul>
+          <div class="actions">
+            <button class="btn primary" onclick="buy('video_basic','Video Editing Base')">Acquista</button>
+          </div>
+        </div>
+
+        <div class="product">
+          <h3>Video Editing Pro</h3>
+          <p class="price" id="price-video-pro">€—</p>
+          <p class="per">per video</p>
+          <ul>
+            <li>Effetti avanzati</li>
+            <li>Color correction</li>
+            <li>ADV ready</li>
+          </ul>
+          <div class="actions">
+            <button class="btn primary" onclick="buy('video_pro','Video Editing Pro')">Acquista</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>© <span id="year"></span> Been 3D</footer>
+
+<!-- CHECKOUT -->
+<div id="checkoutOverlay" class="overlay">
+  <div class="modal">
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <h2 style="margin:0">🛒 Checkout</h2>
+      <button class="btn" onclick="closeCheckout()">✖</button>
+    </div>
+    <p id="coTitle" style="margin-top:6px"></p>
+
+    <div class="grid" style="margin-top:12px">
+      <input id="coEmail" class="input" placeholder="Email cliente (obbligatoria)">
+      <input id="coCoupon" class="input" placeholder="Coupon (opzionale)">
+      <input id="coNote" class="input" placeholder="Note (opzionale)">
+    </div>
+
+    <hr>
+
+    <div class="row" style="justify-content:space-between;align-items:flex-start">
+      <div>
+        <div class="small">Totale</div>
+        <div id="coTotal" style="font-size:34px;font-weight:900">€—</div>
+        <div id="coBreak" class="small"></div>
+      </div>
+      <div style="min-width:280px">
+        <button class="btn primary" style="width:100%;margin-bottom:10px" onclick="confirmOrder('pending')">
+          Crea ordine (In attesa pagamento)
+        </button>
+        <button class="btn" style="width:100%;margin-bottom:10px" onclick="payPaypal()">
+          Paga con PayPal (link)
+        </button>
+        <button class="btn" style="width:100%" onclick="payStripe()">
+          Paga con carta (prossimamente)
+        </button>
+        <div class="small" style="margin-top:10px">
+          Nota: Stripe “vero” richiede backend oppure un Payment Link di Stripe.
+        </div>
+		<div style="
+  margin-top:14px;
+  padding:12px 14px;
+  border-radius:14px;
+  background:rgba(34,211,238,.08);
+  border:1px solid rgba(34,211,238,.25);
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+">
+  💬 Per parlare subito del progetto:
+  <a href="https://t.me/ck_anto"
+     target="_blank"
+     style="
+       color:#22d3ee;
+       font-weight:800;
+       text-decoration:none;
+     ">
+    @ck_anto
+  </a>
+</div>
+
+      </div>
+	  <hr>
+
+<div style="margin-top:14px">
+  <div class="small">Hai domande prima o dopo l'acquisto?</div>
+
+  <a href="https://t.me/ck_anto"
+     target="_blank"
+     class="btn"
+     style="
+       width:100%;
+       margin-top:10px;
+       background:linear-gradient(135deg,#7c3aed,#22d3ee);
+       border:none;
+       display:flex;
+       align-items:center;
+       justify-content:center;
+       gap:10px;
+       font-weight:900;
+     ">
+    💬 Scrivici su Telegram
+  </a>
+
+  <div class="small" style="margin-top:8px;opacity:.8">
+    Risposta rapida • Supporto diretto • Ordini personalizzati
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ====== KEYS ====== */
+const K_PRICES="prices", K_DISCOUNTS="discounts", K_COUPONS="coupons";
+const K_ORDERS="been3d_orders", K_AUDIT="been3d_audit", K_SESSION="been3d_session";
+
+/* ====== HELPERS ====== */
+document.getElementById("year").textContent=new Date().getFullYear();
+const getJSON=(k,def)=>{try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(def));}catch{return def;}};
+const setJSON=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const nowISO=()=>new Date().toISOString();
+const money=n=>`€${Math.round((+n||0)*100)/100}`;
+
+/* ====== PRICE ENGINE ====== */
+const prices=getJSON(K_PRICES,{});
+const discounts=getJSON(K_DISCOUNTS,{});
+
+function finalPrice(key){
+  const base=+prices[key]||0;
+  const disc=+discounts[key]||0;
+  return disc>0 ? Math.round(base*(1-disc/100)) : base;
+}
+function renderPrice(key, id){
+  const el=document.getElementById(id);
+  if(!el) return;
+  const base=+prices[key]||0;
+  if(!base){ el.textContent="€—"; return; }
+  const disc=+discounts[key]||0;
+  if(disc>0){
+    el.innerHTML=`<span style="opacity:.5;text-decoration:line-through;font-size:18px">€${base}</span>
+                  <span style="font-size:38px;margin-left:8px">€${finalPrice(key)}</span>
+                  <span style="color:#22d3ee;font-size:13px;margin-left:6px">-${disc}%</span>`;
+  }else el.textContent=`€${base}`;
+}
+renderPrice("sito_basic","price-sito-basic");
+renderPrice("sito_pro","price-sito-pro");
+renderPrice("grafica","price-grafica");
+renderPrice("video_basic","price-video-basic");
+renderPrice("video_pro","price-video-pro");
+
+/* ====== CHECKOUT / ORDERS ====== */
+let selected=null; // {key,name,base,final}
+function openCheckout(){
+  checkoutOverlay.style.display="flex";
+}
+function closeCheckout(){
+  checkoutOverlay.style.display="none";
+  coEmail.value=""; coCoupon.value=""; coNote.value="";
+}
+function quote(name){
+  alert("Demo: qui colleghi richiesta preventivo (Discord / form). Prodotto: "+name);
+}
+
+function findCoupon(code){
+  if(!code) return null;
+  const list=getJSON(K_COUPONS,[]);
+  const c=list.find(x=>x.code===code.toUpperCase());
+  if(!c) return null;
+  if(c.active===false) return null;
+  if(c.expire && new Date(c.expire) < new Date()) return null;
+  if(c.limit && c.used>=c.limit) return null;
+  return c;
+}
+
+function calcTotalWithCoupon(productKey, couponCode){
+  const base=+prices[productKey]||0;
+  const prodDisc=+discounts[productKey]||0;
+  const afterProd = prodDisc>0 ? Math.round(base*(1-prodDisc/100)) : base;
+
+  const c=findCoupon(couponCode);
+  const coupDisc = c ? (+c.discount||0) : 0;
+  const afterCoupon = coupDisc>0 ? Math.round(afterProd*(1-coupDisc/100)) : afterProd;
+
+  return { base, prodDisc, afterProd, coupon: c?.code || null, coupDisc, total: afterCoupon };
+}
+
+function buy(key, name){
+  if(!(+prices[key])) return alert("Prezzo non impostato (vai su staff.html).");
+  selected={ key, name };
+  coTitle.textContent = name;
+  const t=calcTotalWithCoupon(key,"");
+  coTotal.textContent = money(t.total);
+  coBreak.textContent = `Base ${money(t.base)} • Sconto prodotto ${t.prodDisc||0}% • Coupon 0%`;
+  openCheckout();
+}
+
+/* Apply coupon live */
+coCoupon?.addEventListener("input", ()=>{
+  if(!selected) return;
+  const t=calcTotalWithCoupon(selected.key, coCoupon.value.trim());
+  coTotal.textContent = money(t.total);
+  coBreak.textContent = `Base ${money(t.base)} • Sconto prodotto ${t.prodDisc||0}% • Coupon ${t.coupDisc||0}%`;
+});
+
+/* AUDIT (optional) */
+function audit(type, message){
+  const sess=getJSON(K_SESSION,null);
+  const log=getJSON(K_AUDIT,[]);
+  log.unshift({at:nowISO(), user:sess?.username||"shop", role:sess?.role||"shop", type, message});
+  setJSON(K_AUDIT, log.slice(0,500));
+}
+
+/* Create order */
+function confirmOrder(mode){
+  if(!selected) return;
+  const email=(coEmail.value||"").trim();
+  if(!email) return alert("Inserisci email cliente.");
+
+  const couponCode=(coCoupon.value||"").trim();
+  const t=calcTotalWithCoupon(selected.key, couponCode);
+
+  // aggiorna utilizzo coupon
+  if(t.coupon){
+    const list=getJSON(K_COUPONS,[]);
+    const idx=list.findIndex(c=>c.code===t.coupon);
+    if(idx>=0){
+      list[idx].used=(+list[idx].used||0)+1;
+      setJSON(K_COUPONS,list);
+    }
+  }
+
+  const order={
+    id: Math.random().toString(16).slice(2,8).toUpperCase(),
+    createdAt: nowISO(),
+    updatedAt: nowISO(),
+    status: mode==="pending" ? "In attesa pagamento" : "Nuovo",
+    customerEmail: email,
+    note: (coNote.value||"").trim(),
+    coupon: t.coupon,
+    items:[{ key:selected.key, name:selected.name, price:t.total }],
+    total: t.total,
+    breakdown: t
+  };
+
+  const orders=getJSON(K_ORDERS,[]);
+  orders.unshift(order);
+  setJSON(K_ORDERS, orders);
+
+  /* 🔥 QUESTO È IL CUORE */
+  localStorage.setItem("been3d_last_order", JSON.stringify({
+    id: order.id,
+    email: email
+  }));
+
+  alert(`✅ Ordine creato!\n\nCodice ordine: ${order.id}\n\n👉 Ritrovalo in "I tuoi ordini"`);
+
+  closeCheckout();
+}
+
+function payPaypal(){
+  // SOSTITUISCI con il tuo PayPal.me:
+  // es: paypal.me/altatismp
+  if(!selected) return;
+  const t=calcTotalWithCoupon(selected.key, coCoupon.value.trim());
+  const url = "paypal.me/altatismp" + (t.total||0);
+  window.open(url, "_blank");
+}
+
+function payStripe(){
+  // Se usi Stripe Payment Link:
+  // incolla qui il link del tuo payment link
+  // es: https://buy.stripe.com/xxxxx
+  alert("Stripe: per pagamento reale serve Payment Link Stripe o backend. Se vuoi, ti preparo la versione backend-ready.");
+}
+
+</script>
+</body>
+</html>

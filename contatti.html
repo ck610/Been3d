@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contatti — Been 3D</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* =====================
+   CONTATTI — BEEN 3D
+===================== */
+
+.contacts-wrap{
+  max-width:1100px;
+  margin:100px auto 140px;
+  padding:0 22px;
+}
+
+.contacts-hero{
+  text-align:center;
+  margin-bottom:80px;
+}
+
+.contacts-hero h1{
+  font-size:clamp(44px,4vw,64px);
+  margin:0 0 16px;
+  background:linear-gradient(135deg,#ffffff,#c7b6ff);
+  -webkit-background-clip:text;
+  color:transparent;
+  text-shadow:0 10px 40px rgba(168,85,247,.35);
+}
+
+.contacts-hero p{
+  color:rgba(255,255,255,.75);
+  max-width:60ch;
+  margin:0 auto;
+  font-size:16px;
+}
+
+
+/* GRID */
+.contact-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
+}
+
+@media(max-width:900px){
+  .contact-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+/* CARD */
+.contact-card{
+  padding:32px;
+  border-radius:28px;
+  background:
+    linear-gradient(180deg,
+      rgba(255,255,255,.14),
+      rgba(0,0,0,.40)
+    );
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:
+    0 30px 100px rgba(0,0,0,.6),
+    inset 0 0 0 1px rgba(255,255,255,.08);
+  transition:.45s cubic-bezier(.2,.8,.2,1);
+  position:relative;
+  transform-style:preserve-3d;
+}
+
+/* glow vero */
+.contact-card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:30px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  opacity:.18;
+  filter:blur(32px);
+  z-index:-1;
+}
+
+/* hover */
+.contact-card:hover{
+  transform:
+    translateY(-14px)
+    rotateX(6deg)
+    rotateY(-6deg);
+  box-shadow:
+    0 70px 180px rgba(168,85,247,.55);
+}
+
+
+/* glow dinamico */
+.contact-card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:30px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  opacity:.15;
+  filter:blur(30px);
+  z-index:-1;
+}
+
+/* hover 3D */
+.contact-card:hover{
+  transform:
+    translateY(-14px)
+    rotateX(6deg)
+    rotateY(-6deg);
+  box-shadow:
+    0 60px 160px rgba(168,85,247,.45);
+}
+
+
+.contact-card:hover::before{
+  opacity:.28;
+}
+
+/* ICON */
+.contact-icon{
+  font-size:34px;
+  margin-bottom:12px;
+}
+
+.contact-card h3{
+  color:#fff;
+}
+
+.contact-card p{
+  color:rgba(255,255,255,.7);
+}
+
+.contact-card p{
+  margin:0 0 22px;
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.55;
+}
+
+.contact-card .btn{
+  width:100%;
+  justify-content:center;
+}
+
+/* CTA */
+.contact-cta{
+  margin-top:120px;
+  padding:48px;
+  border-radius:40px;
+  background:
+    linear-gradient(135deg,
+      rgba(168,85,247,.45),
+      rgba(34,211,238,.45)
+    );
+  border:1px solid rgba(168,85,247,.6);
+  box-shadow:
+    0 80px 240px rgba(168,85,247,.65);
+  text-align:center;
+}
+
+.contact-cta h2{
+  color:#fff;
+  font-size:32px;
+}
+
+.contact-cta p{
+  color:rgba(255,255,255,.85);
+}
+
+
+/* ===== NAVBAR FIX CONTATTI ===== */
+
+.nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  backdrop-filter:blur(18px);
+  background:linear-gradient(
+    90deg,
+    rgba(10,8,18,.88),
+    rgba(6,6,12,.78)
+  );
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.nav-wrap{
+  max-width:1200px;
+  margin:auto;
+  padding:14px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.nav-links{
+  display:flex;
+  gap:18px;
+}
+
+.nav-links a{
+  padding:8px 14px;
+  border-radius:999px;
+  font-weight:800;
+  font-size:13px;
+  color:rgba(255,255,255,.75);
+  text-decoration:none; /* 🔥 via sottolineature */
+  transition:.25s ease;
+}
+
+.nav-links a:hover{
+  color:#fff;
+  background:rgba(255,255,255,.08);
+}
+
+.nav-links a.active{
+  color:#fff;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.18);
+}
+
+.nav-orders{
+  padding:8px 14px;
+  border-radius:14px;
+  background:rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.14);
+  font-weight:800;
+  text-decoration:none;
+}
+
+.nav-actions{
+  display:flex;
+  gap:12px;
+}
+
+body{
+  background:
+    radial-gradient(1200px 600px at 20% 10%, rgba(168,85,247,.22), transparent 60%),
+    radial-gradient(900px 500px at 80% 30%, rgba(34,211,238,.18), transparent 60%),
+    #05040a;
+}
+
+.contact-icon{
+  font-size:34px;
+  margin-bottom:12px;
+  transform:translateZ(40px);
+}
+
+.contact-card .btn{
+  width:100%;
+  justify-content:center;
+  transform:translateZ(30px);
+}
+
+.contact-cta{
+  margin-top:110px;
+  padding:44px;
+  border-radius:36px;
+  background:
+    linear-gradient(135deg,
+      rgba(168,85,247,.35),
+      rgba(34,211,238,.35)
+    );
+  border:1px solid rgba(168,85,247,.55);
+  box-shadow:
+    0 60px 200px rgba(168,85,247,.55);
+  text-align:center;
+  transform-style:preserve-3d;
+}
+
+.contact-cta h2{
+  margin:0 0 14px;
+  font-size:30px;
+}
+
+.contact-cta p{
+  color:var(--muted);
+  margin-bottom:26px;
+  font-size:16px;
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(40px) scale(.95);
+  transition:.8s cubic-bezier(.2,.9,.2,1);
+}
+
+.reveal.show{
+  opacity:1;
+  transform:none;
+}
+
+.contact-cta .btn{
+  animation:pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow{
+  0%,100%{ box-shadow:0 0 30px rgba(168,85,247,.45); }
+  50%{ box-shadow:0 0 60px rgba(34,211,238,.65); }
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="nav">
+  <div class="nav-wrap">
+    <div class="brand">Been <span>3D</span></div>
+
+    <div class="nav-links">
+      <a href="index.html">Servizi</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="prezzi.html">Prezzi</a>
+      <a href="contatti.html" class="active">Contatti</a>
+      <a href="shop.html">Shop</a>
+      <a href="orders.html" class="nav-orders">📦 I tuoi ordini</a>
+    </div>
+
+    <div class="nav-actions">
+      <a class="btn ghost" href="#">Vedi i piani</a>
+      <a class="btn primary" href="https://discord.gg/gRY9uU5Fbf" target="_blank">
+        Entra su Discord →
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- MAIN -->
+<main class="contacts-wrap">
+
+  <div class="contacts-hero">
+    <h1>📩 Contattaci</h1>
+    <p>
+      Hai un’idea, un progetto o vuoi un preventivo?
+      Scegli il metodo che preferisci e parliamone subito.
+    </p>
+  </div>
+
+  <div class="contact-grid">
+
+    <!-- TELEGRAM -->
+    <div class="contact-card">
+      <div class="contact-icon">💬</div>
+      <h3>Telegram</h3>
+      <p>Il modo più veloce per parlare direttamente con noi.</p>
+      <a class="btn primary" href="https://t.me/ck_anto" target="_blank">
+        Scrivici su Telegram
+      </a>
+    </div>
+
+    <!-- DISCORD -->
+    <div class="contact-card">
+      <div class="contact-icon">🎮</div>
+      <h3>Discord</h3>
+      <p>Entra nel server Been 3D e apri un ticket dedicato.</p>
+      <a class="btn" href="https://discord.gg/gRY9uU5Fbf" target="_blank">
+        Entra su Discord
+      </a>
+    </div>
+
+    <!-- EMAIL (FIX) -->
+    <div class="contact-card">
+      <div class="contact-icon">✉️</div>
+      <h3>Email</h3>
+      <p>Per richieste formali, preventivi o collaborazioni.</p>
+      <a class="btn" href="mailto:been3dshop@gmail.com">
+        info@been3d.it
+      </a>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="contact-cta">
+    <h2>🚀 Vuoi partire subito?</h2>
+    <p>Scrivici ora e trasformiamo la tua idea in qualcosa di concreto.</p>
+    <a class="btn primary" href="https://t.me/ck_anto" target="_blank">
+      Parliamone ora →
+    </a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="container foot">
+    <div>© <span id="year"></span> Been 3D</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+<script>
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add("show");
+  });
+},{threshold:.15});
+
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
