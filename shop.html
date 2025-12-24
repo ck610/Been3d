@@ -3,662 +3,865 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Been 3D — Staff Panel</title>
+<title>Shop — Been 3D</title>
 
 <style>
 :root{
-  --bg:#05040a;
-  --card:rgba(255,255,255,.06);
-  --border:rgba(255,255,255,.14);
+  --bg:#0a0118;
+  --card:rgba(255,255,255,.04);
+  --card-hover:rgba(255,255,255,.08);
+  --border:rgba(255,255,255,.12);
   --text:#fff;
   --muted:rgba(255,255,255,.6);
   --accent:#a855f7;
   --accent2:#22d3ee;
   --accent3:#f472b6;
-  --radius:18px;
+  --radius:24px;
+  --shadow:0 20px 80px rgba(168,85,247,.15), 0 8px 32px rgba(0,0,0,.4);
 }
-*{box-sizing:border-box}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
 body{
-  margin:0;
-  font-family:system-ui;
+  font-family:'Inter',-apple-system,system-ui,sans-serif;
   background:
-    radial-gradient(900px 500px at 20% 10%, rgba(168,85,247,.18), transparent 60%),
-    radial-gradient(900px 500px at 80% 20%, rgba(34,211,238,.14), transparent 60%),
+    radial-gradient(1200px 800px at 20% 15%, rgba(168,85,247,.15), transparent 55%),
+    radial-gradient(1000px 700px at 80% 25%, rgba(34,211,238,.12), transparent 55%),
+    radial-gradient(800px 600px at 50% 80%, rgba(244,114,182,.08), transparent 50%),
     var(--bg);
   color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
 }
-.app{display:grid;grid-template-columns:270px 1fr;min-height:100vh}
-.sidebar{
-  background:rgba(0,0,0,.45);
-  border-right:1px solid var(--border);
-  padding:22px;
-  backdrop-filter: blur(12px);
+
+/* NAV */
+.nav{
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(20px) saturate(180%);
+  background:rgba(10,1,24,.75);
+  border-bottom:1px solid rgba(255,255,255,.06);
 }
-.brand{font-weight:900;font-size:20px;margin-bottom:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;}
-.userbox{
-  padding:12px;border-radius:14px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.10);
-  margin-bottom:14px;
-  color:var(--muted);
-  font-size:13px;
+.nav-wrap{
+  max-width:1200px;margin:auto;padding:16px 24px;
+  display:flex;justify-content:space-between;align-items:center;
 }
-.userbox strong{color:#fff}
-.nav button{
-  width:100%;
-  padding:12px 14px;
-  border-radius:14px;
-  border:1px solid transparent;
-  background:none;
-  color:#fff;
-  font-weight:800;
-  text-align:left;
-  cursor:pointer;
-  margin-bottom:8px;
-  transition:.2s;
+.brand{
+  font-weight:900;font-size:20px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  letter-spacing:-.5px;
 }
-.nav button:hover,.nav button.active{
+.btn{
+  padding:11px 20px;
+  border-radius:16px;
+  font-weight:700;
+  font-size:14px;
+  border:1px solid var(--border);
   background:var(--card);
-  border-color:var(--border);
+  cursor:pointer;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
 }
-.content{padding:36px 20px;max-width:1200px}
-.card{
+.btn:hover{
+  transform:translateY(-2px);
+  background:var(--card-hover);
+  border-color:rgba(255,255,255,.2);
+}
+.btn.primary{
+  border:none;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;
+  box-shadow:0 4px 20px rgba(168,85,247,.3);
+}
+.btn.primary:hover{
+  box-shadow:0 8px 30px rgba(168,85,247,.4);
+}
+
+/* CONTAINER */
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:80px 24px 100px;
+}
+
+/* HERO */
+.hero{
+  text-align:center;
+  margin-bottom:100px;
+  position:relative;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  top:-100px;
+  left:50%;
+  transform:translateX(-50%);
+  width:600px;
+  height:600px;
+  background:radial-gradient(circle, rgba(168,85,247,.2), transparent 70%);
+  filter:blur(80px);
+  z-index:-1;
+}
+h1{
+  font-size:clamp(42px,7vw,72px);
+  font-weight:900;
+  letter-spacing:-2px;
+  margin-bottom:20px;
+  background:linear-gradient(135deg,#fff,rgba(255,255,255,.7));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.subtitle{
+  font-size:18px;
+  color:var(--muted);
+  max-width:600px;
+  margin:0 auto 40px;
+  line-height:1.6;
+}
+.stats{
+  display:flex;
+  gap:40px;
+  justify-content:center;
+  margin-top:50px;
+  flex-wrap:wrap;
+}
+.stat{
+  text-align:center;
+}
+.stat-num{
+  font-size:36px;
+  font-weight:900;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.stat-label{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+/* SECTION */
+.section{
+  margin-bottom:80px;
+}
+.section-header{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin-bottom:40px;
+}
+.section-icon{
+  font-size:32px;
+  width:60px;
+  height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+}
+.section-title{
+  font-size:32px;
+  font-weight:900;
+  letter-spacing:-.5px;
+}
+.section-desc{
+  color:var(--muted);
+  margin-top:8px;
+  font-size:15px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:28px;
+}
+
+/* PRODUCT CARD */
+.product{
   background:var(--card);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:22px;
-  margin-bottom:18px;
-  box-shadow:0 30px 120px rgba(0,0,0,.5);
+  padding:32px;
+  transition:all .4s cubic-bezier(.4,0,.2,1);
+  position:relative;
+  overflow:hidden;
 }
-h1,h2,h3{margin:0 0 10px}
-p{margin:0 0 10px;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-input,select,textarea{
-  width:100%;
-  padding:10px 12px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:rgba(0,0,0,.35);
-  color:#fff;
-  font-family:inherit;
+.product::before{
+  content:"";
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));
+  opacity:0;
+  transition:opacity .4s;
 }
-textarea{min-height:80px;resize:vertical}
-.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.btn{
-  padding:10px 14px;
-  border-radius:14px;
-  font-weight:900;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.06);
-  color:#fff;
-  cursor:pointer;
-  transition:.2s;
+.product:hover{
+  transform:translateY(-8px);
+  background:var(--card-hover);
+  border-color:rgba(168,85,247,.3);
+  box-shadow:var(--shadow);
 }
-.btn.primary{border:none;background:linear-gradient(135deg,var(--accent),var(--accent2))}
-.btn.secondary{border:none;background:linear-gradient(135deg,var(--accent2),var(--accent3))}
-.btn:hover{transform:translateY(-1px)}
+.product:hover::before{
+  opacity:1;
+}
 .badge{
-  display:flex;gap:10px;align-items:center;justify-content:space-between;
-  padding:10px 12px;border-radius:14px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(0,0,0,.25);
-  margin-top:10px;
-}
-.small{font-size:12px;color:var(--muted)}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-@media(max-width:1000px){.app{grid-template-columns:1fr}.sidebar{position:sticky;top:0}.kpis{grid-template-columns:repeat(2,1fr)}}
-.panel{display:none}
-.panel.active{display:block}
-
-.overlay{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.65);
-  display:flex;align-items:center;justify-content:center;
-  z-index:9999;
-}
-.modal{
-  width:min(520px,92vw);
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:22px;
-  padding:22px;
-  box-shadow:0 40px 140px rgba(0,0,0,.7);
-  backdrop-filter: blur(14px);
-}
-hr{border:none;border-top:1px solid rgba(255,255,255,.10);margin:14px 0}
-.table{
-  width:100%;
-  border-collapse:separate;
-  border-spacing:0 10px;
-}
-.table td,.table th{padding:10px 12px;text-align:left}
-.table tr{
-  background:rgba(0,0,0,.25);
-  border:1px solid rgba(255,255,255,.12);
-}
-.table tr td:first-child,.table tr th:first-child{border-radius:14px 0 0 14px}
-.table tr td:last-child,.table tr th:last-child{border-radius:0 14px 14px 0}
-.status-badge{
-  display:inline-block;
-  padding:4px 10px;
-  border-radius:8px;
+  display:inline-flex;
+  padding:6px 14px;
+  border-radius:12px;
+  background:rgba(168,85,247,.15);
+  border:1px solid rgba(168,85,247,.3);
   font-size:11px;
   font-weight:800;
   text-transform:uppercase;
+  letter-spacing:.5px;
+  margin-bottom:16px;
 }
-.status-nuovo{background:rgba(34,211,238,.15);border:1px solid rgba(34,211,238,.3);color:#22d3ee}
-.status-lavorazione{background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.3);color:#a855f7}
-.status-attesa{background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.3);color:#fbbf24}
-.status-pagato{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#22c55e}
-.status-consegnato{background:rgba(34,197,94,.2);border:1px solid rgba(34,197,94,.4);color:#22c55e}
-.status-annullato{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#ef4444}
+.badge.hot{
+  background:rgba(244,114,182,.15);
+  border-color:rgba(244,114,182,.3);
+}
+.badge.new{
+  background:rgba(34,211,238,.15);
+  border-color:rgba(34,211,238,.3);
+}
+.product h3{
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:12px;
+  letter-spacing:-.3px;
+}
+.product-desc{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.6;
+  margin-bottom:20px;
+}
+.price{
+  font-size:42px;
+  font-weight:900;
+  margin:16px 0 6px;
+  letter-spacing:-1px;
+}
+.per{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:20px;
+}
+ul{
+  list-style:none;
+  margin-bottom:24px;
+}
+ul li{
+  color:var(--muted);
+  font-size:14px;
+  padding:8px 0;
+  padding-left:24px;
+  position:relative;
+  line-height:1.5;
+}
+ul li::before{
+  content:"✓";
+  position:absolute;
+  left:0;
+  color:var(--accent2);
+  font-weight:900;
+}
+.actions{
+  display:flex;
+  gap:12px;
+}
+.actions .btn{
+  flex:1;
+  justify-content:center;
+}
+
+/* FULL WIDTH PRODUCT */
+.product-full{
+  grid-column:1/-1;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:center;
+}
+@media(max-width:900px){
+  .product-full{
+    grid-template-columns:1fr;
+  }
+}
+
+/* FOOTER */
+footer{
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:40px 24px;
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* MODAL */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(8px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  padding:20px;
+}
+.modal{
+  width:min(700px,100%);
+  max-height:90vh;
+  overflow-y:auto;
+  background:rgba(10,1,24,.95);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:32px;
+  box-shadow:0 40px 140px rgba(0,0,0,.8);
+  backdrop-filter:blur(20px);
+}
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:24px;
+}
+.modal-header h2{
+  font-size:28px;
+  font-weight:900;
+}
+.input{
+  width:100%;
+  padding:12px 16px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.03);
+  color:#fff;
+  font-size:14px;
+  transition:all .3s;
+}
+.input:focus{
+  outline:none;
+  border-color:var(--accent);
+  background:rgba(255,255,255,.05);
+}
+.form-grid{
+  display:grid;
+  gap:16px;
+  margin:24px 0;
+}
+hr{
+  border:none;
+  border-top:1px solid rgba(255,255,255,.08);
+  margin:24px 0;
+}
+.total-section{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:32px;
+  flex-wrap:wrap;
+}
+.total-info{
+  flex:1;
+}
+.total-label{
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.total-price{
+  font-size:48px;
+  font-weight:900;
+  letter-spacing:-2px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.total-breakdown{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:8px;
+}
+.payment-buttons{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  min-width:280px;
+}
+.info-box{
+  margin-top:24px;
+  padding:16px 20px;
+  border-radius:16px;
+  background:rgba(34,211,238,.08);
+  border:1px solid rgba(34,211,238,.25);
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.info-box a{
+  color:var(--accent2);
+  font-weight:800;
+  text-decoration:none;
+}
+.small{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:8px;
+  line-height:1.5;
+}
+
+/* ANIMATIONS */
+@keyframes fadeInUp{
+  from{
+    opacity:0;
+    transform:translateY(30px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+.product{
+  animation:fadeInUp .6s ease backwards;
+}
+.product:nth-child(1){animation-delay:.1s}
+.product:nth-child(2){animation-delay:.2s}
+.product:nth-child(3){animation-delay:.3s}
 </style>
 </head>
 
 <body>
+<header class="nav">
+  <div class="nav-wrap">
+    <div class="brand">BEEN 3D</div>
+    <a class="btn" href="index.html">← Torna al sito</a>
+  </div>
+</header>
 
-<!-- LOGIN -->
-<div id="loginOverlay" class="overlay" style="display:none">
-  <div class="modal">
-    <h2>🔐 Login Staff</h2>
-    <p>Accedi per gestire Been 3D.</p>
+<main class="container">
+  <div class="hero">
+    <h1>I nostri servizi</h1>
+    <p class="subtitle">Soluzioni professionali per portare il tuo progetto al livello successivo. Prezzi trasparenti, qualità garantita.</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Progetti completati</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">24h</div>
+        <div class="stat-label">Supporto dedicato</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Soddisfazione garantita</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SITI WEB -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon">🌐</div>
+      <div>
+        <h2 class="section-title">Siti Web</h2>
+        <p class="section-desc">Design moderno e performance ottimali per la tua presenza online</p>
+      </div>
+    </div>
+
     <div class="grid">
-      <input id="loginUser" placeholder="Username">
-      <input id="loginPass" placeholder="Password" type="password">
+      <div class="product">
+        <span class="badge">BASIC</span>
+        <h3>Sito Web Basic</h3>
+        <p class="product-desc">Perfetto per landing page e presenza online essenziale</p>
+        <p class="price" id="price-sito-basic">€—</p>
+        <p class="per">pagamento unico</p>
+        <ul>
+          <li>Landing page 1 pagina</li>
+          <li>Design moderno e pulito</li>
+          <li>Responsive mobile-first</li>
+          <li>Modulo contatti funzionante</li>
+          <li>Ottimizzazione base SEO</li>
+        </ul>
+        <div class="actions">
+          <button class="btn primary" onclick="buy('sito_basic','Sito Web Basic')">Acquista ora</button>
+        </div>
+      </div>
+
+      <div class="product">
+        <span class="badge hot">🔥 CONSIGLIATO</span>
+        <h3>Sito Web Pro</h3>
+        <p class="product-desc">Soluzione completa per business che vogliono distinguersi</p>
+        <p class="price" id="price-sito-pro">€—</p>
+        <p class="per">pagamento unico</p>
+        <ul>
+          <li>Sito multi-pagina completo</li>
+          <li>Animazioni e interazioni moderne</li>
+          <li>SEO avanzato e analytics</li>
+          <li>CTA ottimizzati per conversioni</li>
+          <li>Supporto post-lancio 30gg</li>
+        </ul>
+        <div class="actions">
+          <button class="btn primary" onclick="buy('sito_pro','Sito Web Pro')">Acquista ora</button>
+        </div>
+      </div>
     </div>
-    <div class="row">
-      <button class="btn primary" onclick="doLogin()">Entra</button>
-      <button class="btn" onclick="seedAdmin(); alert('Admin creato (se non esiste già)')">Crea Admin default</button>
+  </section>
+
+  <!-- DISCORD & MINECRAFT -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon">🎮</div>
+      <div>
+        <h2 class="section-title">Bot Discord & Plugin Minecraft</h2>
+        <p class="section-desc">Automatizza la tua community e migliora l'esperienza di gioco</p>
+      </div>
     </div>
-    <p class="small" style="margin-top:10px">Solo gli staffer hanno l'accesso</p>
+
+    <div class="grid">
+      <div class="product">
+        <span class="badge new">DISCORD</span>
+        <h3>Bot Discord Custom</h3>
+        <p class="product-desc">Bot personalizzato per gestire e animare il tuo server</p>
+        <p class="price" id="price-bot-discord">€—</p>
+        <p class="per">pagamento unico</p>
+        <ul>
+          <li>Comandi personalizzati</li>
+          <li>Sistema di moderazione</li>
+          <li>Livelli e rewards</li>
+          <li>Integrazioni API</li>
+          <li>Hosting incluso 3 mesi</li>
+        </ul>
+        <div class="actions">
+          <button class="btn primary" onclick="buy('bot_discord','Bot Discord Custom')">Acquista ora</button>
+        </div>
+      </div>
+
+      <div class="product">
+        <span class="badge new">MINECRAFT</span>
+        <h3>Plugin Minecraft</h3>
+        <p class="product-desc">Plugin su misura per il tuo server Minecraft</p>
+        <p class="price" id="price-plugin-mc">€—</p>
+        <p class="per">pagamento unico</p>
+        <ul>
+          <li>Sviluppo custom</li>
+          <li>Compatibilità Spigot/Paper</li>
+          <li>Config personalizzabile</li>
+          <li>Ottimizzato performance</li>
+          <li>Aggiornamenti e supporto</li>
+        </ul>
+        <div class="actions">
+          <button class="btn primary" onclick="buy('plugin_mc','Plugin Minecraft')">Acquista ora</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRAFICA -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon">🎨</div>
+      <div>
+        <h2 class="section-title">Grafica & Brand Identity</h2>
+        <p class="section-desc">Identità visiva professionale che fa la differenza</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="product product-full">
+        <div>
+          <span class="badge">PACK COMPLETO</span>
+          <h3>Logo & Banner Professional</h3>
+          <p class="product-desc">Pacchetto completo per una brand identity coerente su tutti i canali</p>
+          <ul>
+            <li>Logo professionale (3 proposte)</li>
+            <li>Banner per social e web</li>
+            <li>Brand identity coerente</li>
+            <li>File sorgenti + esportazioni</li>
+            <li>Guida stilistica inclusa</li>
+          </ul>
+        </div>
+        <div>
+          <p class="price" id="price-grafica">€—</p>
+          <p class="per">pacchetto completo</p>
+          <div class="actions" style="max-width:100%">
+            <button class="btn primary" onclick="buy('grafica','Grafica (Logo & Banner)')">Acquista ora</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon">🎬</div>
+      <div>
+        <h2 class="section-title">Video Editing</h2>
+        <p class="section-desc">Editing professionale per social media e advertising</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="product">
+        <span class="badge">BASE</span>
+        <h3>Video Editing Base</h3>
+        <p class="product-desc">Editing essenziale e professionale per contenuti social</p>
+        <p class="price" id="price-video-basic">€—</p>
+        <p class="per">per video</p>
+        <ul>
+          <li>Montaggio professionale</li>
+          <li>Tagli e transizioni</li>
+          <li>Formato social ready</li>
+          <li>Export HD</li>
+        </ul>
+        <div class="actions">
+          <button class="btn primary" onclick="buy('video_basic','Video Editing Base')">Acquista ora</button>
+        </div>
+      </div>
+
+      <div class="product">
+        <span class="badge hot">PRO</span>
+        <h3>Video Editing Pro</h3>
+        <p class="product-desc">Massima qualità per contenuti pubblicitari e premium</p>
+        <p class="price" id="price-video-pro">€—</p>
+        <p class="per">per video</p>
+        <ul>
+          <li>Effetti avanzati VFX</li>
+          <li>Color grading professionale</li>
+          <li>Motion graphics</li>
+          <li>ADV e marketing ready</li>
+        </ul>
+        <div class="actions">
+          <button class="btn primary" onclick="buy('video_pro','Video Editing Pro')">Acquista ora</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>© <span id="year"></span> Been 3D — Tutti i diritti riservati</p>
+  <p style="margin-top:8px;font-size:12px">Realizzato con ❤️ per creativi e imprenditori digitali</p>
+</footer>
+
+<!-- CHECKOUT MODAL -->
+<div id="checkoutOverlay" class="overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>🛒 Checkout</h2>
+      <button class="btn" onclick="closeCheckout()">✕</button>
+    </div>
+    
+    <p id="coTitle" style="font-size:18px;font-weight:700;margin-bottom:24px"></p>
+
+    <div class="form-grid">
+      <input id="coEmail" class="input" placeholder="Email cliente (obbligatoria)" type="email">
+      <input id="coCoupon" class="input" placeholder="Codice coupon (opzionale)">
+      <input id="coNote" class="input" placeholder="Note aggiuntive (opzionale)">
+    </div>
+
+    <hr>
+
+    <div class="total-section">
+      <div class="total-info">
+        <div class="total-label">Totale da pagare</div>
+        <div class="total-price" id="coTotal">€—</div>
+        <div class="total-breakdown" id="coBreak"></div>
+      </div>
+      
+      <div class="payment-buttons">
+        <button class="btn primary" onclick="confirmOrder('pending')" style="justify-content:center">
+          📝 Crea ordine
+        </button>
+        <button class="btn" onclick="payPaypal()" style="justify-content:center">
+          💳 Paga con PayPal
+        </button>
+        <button class="btn" onclick="payStripe()" style="justify-content:center;opacity:.6">
+          💎 Carta (prossimamente)
+        </button>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <span>💬</span>
+      <div>
+        Hai domande? Contattaci su Telegram:
+        <a href="https://t.me/ck_anto" target="_blank">@ck_anto</a>
+      </div>
+    </div>
+
+    <div class="small" style="margin-top:16px">
+      Cliccando su "Crea ordine" accetti i nostri termini di servizio. Per pagamenti con carta, contattaci direttamente.
+    </div>
   </div>
 </div>
 
-<div class="app">
-  <aside class="sidebar">
-    <div class="brand">🎛️ Been 3D</div>
-    <div class="userbox">
-      <div><strong id="who">—</strong> <span id="role" class="small"></span></div>
-      <div class="small" id="sessInfo">—</div>
-      <div class="row" style="margin-top:10px">
-        <button class="btn" onclick="logout()">Logout</button>
-      </div>
-    </div>
-
-    <div class="nav">
-      <button class="active" data-panel="dashboard" onclick="openPanel('dashboard', this)">Dashboard</button>
-      <button data-panel="orders" onclick="openPanel('orders', this)">Ordini</button>
-      <button data-panel="coupons" onclick="openPanel('coupons', this)">Coupon</button>
-      <button data-panel="prices" onclick="openPanel('prices', this)" data-admin="1">Prezzi & Sconti</button>
-      <button data-panel="staff" onclick="openPanel('staff', this)" data-admin="1">Staff</button>
-      <button data-panel="audit" onclick="openPanel('audit', this)" data-admin="1">Storico Modifiche</button>
-    </div>
-  </aside>
-
-  <main class="content">
-
-    <section id="dashboard" class="panel active">
-      <div class="card">
-        <h1>Dashboard</h1>
-        <p>Gestisci ordini, coupon, staff e prezzi.</p>
-        <div class="kpis">
-          <div class="card">
-            <h3 id="kpiOrders">0</h3><p>Ordini totali</p>
-          </div>
-          <div class="card">
-            <h3 id="kpiNew">0</h3><p>Nuovi</p>
-          </div>
-          <div class="card">
-            <h3 id="kpiPaid">0</h3><p>Pagati</p>
-          </div>
-          <div class="card">
-            <h3 id="kpiRevenue">€0</h3><p>Totale</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="orders" class="panel">
-      <div class="card">
-        <h2>📦 Ordini</h2>
-        <p>Creati dallo shop automaticamente.</p>
-        <div class="row">
-          <button class="btn" onclick="exportOrders()">Esporta JSON</button>
-          <button class="btn" onclick="clearOrders()">Svuota (admin)</button>
-        </div>
-        <div id="ordersList"></div>
-      </div>
-    </section>
-
-    <section id="coupons" class="panel">
-      <div class="card">
-        <h2>🏷️ Coupon</h2>
-        <div class="grid">
-          <input id="cCode" placeholder="Codice (BEEN10)">
-          <input id="cDiscount" type="number" placeholder="Sconto %">
-          <input id="cLimit" type="number" placeholder="Utilizzi max (vuoto = ∞)">
-          <input id="cExpire" type="date">
-        </div>
-        <div class="row">
-          <button class="btn primary" onclick="createCoupon()">Crea coupon</button>
-        </div>
-        <div id="couponList"></div>
-      </div>
-    </section>
-
-    <section id="prices" class="panel">
-      <div class="card">
-        <h2>💰 Prezzi & Sconti (Admin)</h2>
-        
-        <h3>🌐 Siti Web (€)</h3>
-        <div class="grid">
-          <input id="price_sito_basic" placeholder="Sito Web Basic">
-          <input id="price_sito_pro" placeholder="Sito Web Pro">
-        </div>
-
-        <h3 style="margin-top:16px">🎮 Discord & Minecraft (€)</h3>
-        <div class="grid">
-          <input id="price_bot_discord" placeholder="Bot Discord Custom">
-          <input id="price_plugin_mc" placeholder="Plugin Minecraft">
-        </div>
-
-        <h3 style="margin-top:16px">🎨 Grafica (€)</h3>
-        <div class="grid">
-          <input id="price_grafica" placeholder="Logo & Banner">
-        </div>
-
-        <h3 style="margin-top:16px">🎬 Video Editing (€)</h3>
-        <div class="grid">
-          <input id="price_video_basic" placeholder="Video Editing Base">
-          <input id="price_video_pro" placeholder="Video Editing Pro">
-        </div>
-
-        <hr>
-
-        <h3>Sconti Globali (%)</h3>
-        <p class="small">Gli sconti si applicano a tutti i prodotti della categoria</p>
-        
-        <h4 style="margin-top:16px">🌐 Siti Web</h4>
-        <div class="grid">
-          <input id="disc_sito_basic" placeholder="Sconto Sito Basic">
-          <input id="disc_sito_pro" placeholder="Sconto Sito Pro">
-        </div>
-
-        <h4 style="margin-top:16px">🎮 Discord & Minecraft</h4>
-        <div class="grid">
-          <input id="disc_bot_discord" placeholder="Sconto Bot Discord">
-          <input id="disc_plugin_mc" placeholder="Sconto Plugin Minecraft">
-        </div>
-
-        <h4 style="margin-top:16px">🎨 Grafica</h4>
-        <div class="grid">
-          <input id="disc_grafica" placeholder="Sconto Grafica">
-        </div>
-
-        <h4 style="margin-top:16px">🎬 Video Editing</h4>
-        <div class="grid">
-          <input id="disc_video_basic" placeholder="Sconto Video Base">
-          <input id="disc_video_pro" placeholder="Sconto Video Pro">
-        </div>
-
-        <div class="row">
-          <button class="btn primary" onclick="savePricesDiscounts()">Salva tutto</button>
-          <button class="btn" onclick="resetPricesDiscounts()">Reset (admin)</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="staff" class="panel">
-      <div class="card">
-        <h2>👥 Staff (Admin)</h2>
-        <div class="grid">
-          <input id="sUser" placeholder="Username">
-          <input id="sPass" placeholder="Password" type="password">
-          <select id="sRole">
-            <option value="admin">Admin</option>
-            <option value="staff">Staff</option>
-          </select>
-        </div>
-        <div class="row">
-          <button class="btn primary" onclick="addUser()">Aggiungi utente</button>
-        </div>
-        <div id="staffList"></div>
-        <hr>
-        <h3>Cambia password (tu)</h3>
-        <div class="grid">
-          <input id="meOld" placeholder="Vecchia password" type="password">
-          <input id="meNew" placeholder="Nuova password" type="password">
-        </div>
-        <div class="row">
-          <button class="btn" onclick="changeMyPassword()">Aggiorna password</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="audit" class="panel">
-      <div class="card">
-        <h2>🧾 Storico Modifiche (Admin)</h2>
-        <p>Registra azioni: prezzi, sconti, coupon, ordini, staff.</p>
-        <div class="row">
-          <button class="btn" onclick="exportAudit()">Esporta JSON</button>
-          <button class="btn" onclick="clearAudit()">Svuota (admin)</button>
-        </div>
-        <div id="auditList"></div>
-      </div>
-    </section>
-
-  </main>
-</div>
-
 <script>
-/* ========= STORAGE KEYS ========= */
-const K_USERS = "been3d_users";
-const K_SESSION = "been3d_session";
-const K_ORDERS = "been3d_orders";
-const K_AUDIT = "been3d_audit";
-const K_PRICES = "prices";
-const K_DISCOUNTS = "discounts";
-const K_COUPONS = "coupons";
+/* ====== STORAGE KEYS ====== */
+const K_PRICES="prices", K_DISCOUNTS="discounts", K_COUPONS="coupons";
+const K_ORDERS="been3d_orders", K_AUDIT="been3d_audit", K_SESSION="been3d_session";
 
-/* ========= BASIC HELPERS ========= */
-const nowISO = ()=>new Date().toISOString();
-const money = (n)=>`€${Math.round((+n||0)*100)/100}`;
-const getJSON = (k, def)=>{ try{ return JSON.parse(localStorage.getItem(k) || JSON.stringify(def)); }catch{ return def; } };
-const setJSON = (k, v)=>localStorage.setItem(k, JSON.stringify(v));
-function escapeHtml(s){ return String(s).replace(/[&<>"']/g,m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m])); }
+/* ====== HELPERS ====== */
+document.getElementById("year").textContent=new Date().getFullYear();
+const getJSON=(k,def)=>{try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(def));}catch{return def;}};
+const setJSON=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const nowISO=()=>new Date().toISOString();
+const money=n=>`€${Math.round((+n||0)*100)/100}`;
 
-/* ========= SEED ADMIN ========= */
-function seedAdmin(){
-  const users = getJSON(K_USERS, []);
-  const exists = users.some(u=>u.username==="admin");
-  if(!exists){
-    users.push({ username:"admin", pass:"admin123", role:"admin", createdAt: nowISO() });
-    setJSON(K_USERS, users);
+/* ====== PRICE ENGINE ====== */
+const prices=getJSON(K_PRICES,{});
+const discounts=getJSON(K_DISCOUNTS,{});
+
+function finalPrice(key){
+  const base=+prices[key]||0;
+  const disc=+discounts[key]||0;
+  return disc>0 ? Math.round(base*(1-disc/100)) : base;
+}
+
+function renderPrice(key, id){
+  const el=document.getElementById(id);
+  if(!el) return;
+  const base=+prices[key]||0;
+  if(!base){ el.textContent="€—"; return; }
+  const disc=+discounts[key]||0;
+  if(disc>0){
+    el.innerHTML=`<span style="opacity:.4;text-decoration:line-through;font-size:20px">€${base}</span>
+                  <span style="font-size:42px;margin-left:8px">€${finalPrice(key)}</span>
+                  <span style="color:#22d3ee;font-size:14px;margin-left:8px">-${disc}%</span>`;
+  }else el.textContent=`€${base}`;
+}
+
+// Render all prices
+renderPrice("sito_basic","price-sito-basic");
+renderPrice("sito_pro","price-sito-pro");
+renderPrice("bot_discord","price-bot-discord");
+renderPrice("plugin_mc","price-plugin-mc");
+renderPrice("grafica","price-grafica");
+renderPrice("video_basic","price-video-basic");
+renderPrice("video_pro","price-video-pro");
+
+/* ====== CHECKOUT ====== */
+let selected=null;
+
+function openCheckout(){
+  checkoutOverlay.style.display="flex";
+}
+
+function closeCheckout(){
+  checkoutOverlay.style.display="none";
+  coEmail.value=""; coCoupon.value=""; coNote.value="";
+}
+
+function findCoupon(code){
+  if(!code) return null;
+  const list=getJSON(K_COUPONS,[]);
+  const c=list.find(x=>x.code===code.toUpperCase());
+  if(!c) return null;
+  if(c.active===false) return null;
+  if(c.expire && new Date(c.expire) < new Date()) return null;
+  if(c.limit && c.used>=c.limit) return null;
+  return c;
+}
+
+function calcTotalWithCoupon(productKey, couponCode){
+  const base=+prices[productKey]||0;
+  const prodDisc=+discounts[productKey]||0;
+  const afterProd = prodDisc>0 ? Math.round(base*(1-prodDisc/100)) : base;
+
+  const c=findCoupon(couponCode);
+  const coupDisc = c ? (+c.discount||0) : 0;
+  const afterCoupon = coupDisc>0 ? Math.round(afterProd*(1-coupDisc/100)) : afterProd;
+
+  return { base, prodDisc, afterProd, coupon: c?.code || null, coupDisc, total: afterCoupon };
+}
+
+function buy(key, name){
+  if(!(+prices[key])) return alert("⚠️ Prezzo non ancora configurato. Contattaci su Telegram per un preventivo!");
+  selected={ key, name };
+  coTitle.textContent = name;
+  const t=calcTotalWithCoupon(key,"");
+  coTotal.textContent = money(t.total);
+  coBreak.textContent = `Base ${money(t.base)} • Sconto ${t.prodDisc||0}% • Coupon 0%`;
+  openCheckout();
+}
+
+// Apply coupon live
+coCoupon?.addEventListener("input", ()=>{
+  if(!selected) return;
+  const t=calcTotalWithCoupon(selected.key, coCoupon.value.trim());
+  coTotal.textContent = money(t.total);
+  coBreak.textContent = `Base ${money(t.base)} • Sconto ${t.prodDisc||0}% • Coupon ${t.coupDisc||0}%`;
+});
+
+function confirmOrder(mode){
+  if(!selected) return;
+  const email=(coEmail.value||"").trim();
+  if(!email) return alert("⚠️ Inserisci un'email valida per continuare");
+
+  const couponCode=(coCoupon.value||"").trim();
+  const t=calcTotalWithCoupon(selected.key, couponCode);
+
+  // Update coupon usage
+  if(t.coupon){
+    const list=getJSON(K_COUPONS,[]);
+    const idx=list.findIndex(c=>c.code===t.coupon);
+    if(idx>=0){
+      list[idx].used=(+list[idx].used||0)+1;
+      setJSON(K_COUPONS,list);
+    }
   }
-}
 
-/* ========= AUTH ========= */
-function requireLogin(){
-  seedAdmin();
-  const sess = getJSON(K_SESSION, null);
-  if(!sess || !sess.username){
-    document.getElementById("loginOverlay").style.display="flex";
-    return false;
-  }
-  document.getElementById("loginOverlay").style.display="none";
-  return true;
-}
-
-function doLogin(){
-  const u = (loginUser.value||"").trim();
-  const p = (loginPass.value||"").trim();
-  const users = getJSON(K_USERS, []);
-  const found = users.find(x=>x.username===u && x.pass===p);
-  if(!found){ alert("Credenziali errate"); return; }
-  setJSON(K_SESSION, { username:found.username, role:found.role, loginAt: nowISO() });
-  audit("LOGIN", `Accesso: ${found.username} (${found.role})`);
-  location.reload();
-}
-
-function logout(){
-  const sess = getJSON(K_SESSION, null);
-  if(sess?.username) audit("LOGOUT", `Uscita: ${sess.username}`);
-  localStorage.removeItem(K_SESSION);
-  location.reload();
-}
-
-function session(){
-  return getJSON(K_SESSION, null);
-}
-function isAdmin(){
-  return session()?.role === "admin";
-}
-
-/* ========= PANELS + PERMISSIONS ========= */
-function openPanel(id, btn){
-  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
-  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  if(btn) btn.classList.add("active");
-  if(id==="orders") renderOrders();
-  if(id==="coupons") renderCoupons();
-  if(id==="prices") loadPricesDiscounts();
-  if(id==="staff") renderStaff();
-  if(id==="audit") renderAudit();
-}
-
-function applyPermissionsUI(){
-  const sess = session();
-  who.textContent = sess.username;
-  role.textContent = `(${sess.role})`;
-  sessInfo.textContent = `Login: ${new Date(sess.loginAt).toLocaleString()}`;
-
-  document.querySelectorAll("[data-admin='1']").forEach(b=>{
-    b.style.display = isAdmin() ? "block" : "none";
-  });
-}
-
-/* ========= AUDIT ========= */
-function audit(type, message){
-  const sess = getJSON(K_SESSION, {username:"?"});
-  const log = getJSON(K_AUDIT, []);
-  log.unshift({
-    at: nowISO(),
-    user: sess.username || "?",
-    role: sess.role || "?",
-    type,
-    message
-  });
-  setJSON(K_AUDIT, log.slice(0, 500));
-}
-
-function renderAudit(){
-  const log = getJSON(K_AUDIT, []);
-  auditList.innerHTML = log.length ? log.map(a=>`
-    <div class="badge">
-      <div>
-        <div><strong>${escapeHtml(a.type)}</strong> — ${escapeHtml(a.message)}</div>
-        <div class="small">${escapeHtml(a.user)} • ${escapeHtml(a.role)} • ${new Date(a.at).toLocaleString()}</div>
-      </div>
-    </div>
-  `).join("") : `<p class="small">Nessuna modifica registrata.</p>`;
-}
-function exportAudit(){
-  const log = getJSON(K_AUDIT, []);
-  navigator.clipboard.writeText(JSON.stringify(log,null,2));
-  alert("Audit copiato negli appunti (JSON).");
-}
-function clearAudit(){
-  if(!isAdmin()) return alert("Solo admin.");
-  if(confirm("Svuotare storico modifiche?")){
-    setJSON(K_AUDIT, []);
-    renderAudit();
-  }
-}
-
-/* ========= PRICES + DISCOUNTS ========= */
-function loadPricesDiscounts(){
-  if(!isAdmin()) return;
-  const p = getJSON(K_PRICES, {});
-  const d = getJSON(K_DISCOUNTS, {});
-  
-  // Prices
-  price_sito_basic.value = p.sito_basic ?? "";
-  price_sito_pro.value = p.sito_pro ?? "";
-  price_bot_discord.value = p.bot_discord ?? "";
-  price_plugin_mc.value = p.plugin_mc ?? "";
-  price_grafica.value = p.grafica ?? "";
-  price_video_basic.value = p.video_basic ?? "";
-  price_video_pro.value = p.video_pro ?? "";
-
-  // Discounts
-  disc_sito_basic.value = d.sito_basic ?? "";
-  disc_sito_pro.value = d.sito_pro ?? "";
-  disc_bot_discord.value = d.bot_discord ?? "";
-  disc_plugin_mc.value = d.plugin_mc ?? "";
-  disc_grafica.value = d.grafica ?? "";
-  disc_video_basic.value = d.video_basic ?? "";
-  disc_video_pro.value = d.video_pro ?? "";
-}
-
-function savePricesDiscounts(){
-  if(!isAdmin()) return alert("Solo admin.");
-  const prices = {
-    sito_basic:+price_sito_basic.value||0,
-    sito_pro:+price_sito_pro.value||0,
-    bot_discord:+price_bot_discord.value||0,
-    plugin_mc:+price_plugin_mc.value||0,
-    grafica:+price_grafica.value||0,
-    video_basic:+price_video_basic.value||0,
-    video_pro:+price_video_pro.value||0
+  const order={
+    id: Math.random().toString(16).slice(2,8).toUpperCase(),
+    createdAt: nowISO(),
+    updatedAt: nowISO(),
+    status: mode==="pending" ? "In attesa pagamento" : "Nuovo",
+    customerEmail: email,
+    note: (coNote.value||"").trim(),
+    coupon: t.coupon,
+    items:[{ key:selected.key, name:selected.name, price:t.total }],
+    total: t.total,
+    breakdown: t
   };
-  const discounts = {
-    sito_basic:+disc_sito_basic.value||0,
-    sito_pro:+disc_sito_pro.value||0,
-    bot_discord:+disc_bot_discord.value||0,
-    plugin_mc:+disc_plugin_mc.value||0,
-    grafica:+disc_grafica.value||0,
-    video_basic:+disc_video_basic.value||0,
-    video_pro:+disc_video_pro.value||0
-  };
-  setJSON(K_PRICES, prices);
-  setJSON(K_DISCOUNTS, discounts);
-  audit("PRICING", "Aggiornati prezzi/sconti prodotti");
-  alert("✅ Salvato! Apri shop.html e vedrai i nuovi prezzi.");
+
+  const orders=getJSON(K_ORDERS,[]);
+  orders.unshift(order);
+  setJSON(K_ORDERS, orders);
+
+  localStorage.setItem("been3d_last_order", JSON.stringify({
+    id: order.id,
+    email: email
+  }));
+
+  alert(`✅ Ordine creato con successo!\n\n📋 Codice: ${order.id}\n📧 Email: ${email}\n\n👉 Controlla "I tuoi ordini" per i dettagli`);
+  closeCheckout();
 }
 
-function resetPricesDiscounts(){
-  if(!isAdmin()) return alert("Solo admin.");
-  if(confirm("Resettare prezzi e sconti?")){
-    localStorage.removeItem(K_PRICES);
-    localStorage.removeItem(K_DISCOUNTS);
-    audit("PRICING_RESET", "Reset prezzi/sconti");
-    loadPricesDiscounts();
-    alert("✅ Reset completato!");
-  }
+function payPaypal(){
+  if(!selected) return;
+  const t=calcTotalWithCoupon(selected.key, coCoupon.value.trim());
+  const url = "https://paypal.me/altatismp/" + (t.total||0);
+  window.open(url, "_blank");
 }
 
-/* ========= COUPONS ========= */
-function coupons(){ return getJSON(K_COUPONS, []); }
-function saveCoupons(list){ setJSON(K_COUPONS, list); }
-function createCoupon(){
-  const code = (cCode.value||"").trim().toUpperCase();
-  const discount = +cDiscount.value||0;
-  const limit = cLimit.value ? +cLimit.value : null;
-  const expire = cExpire.value ? cExpire.value : null;
-
-  if(!code || discount<=0) return alert("Inserisci codice e sconto valido.");
-  const list = coupons();
-  if(list.some(c=>c.code===code)) return alert("Codice già esistente.");
-
-  list.unshift({ code, discount, limit, used:0, expire, active:true, createdAt: nowISO() });
-  saveCoupons(list);
-  audit("COUPON_CREATE", `Creato coupon ${code} (-${discount}%)`);
-  renderCoupons();
-  cCode.value=""; cDiscount.value=""; cLimit.value=""; cExpire.value="";
+function payStripe(){
+  alert("💎 Pagamento con carta disponibile a breve!\n\nPer ora puoi:\n• Usare PayPal\n• Contattarci su Telegram: @ck_anto");
 }
-
-function toggleCoupon(code){
-  const list = coupons().map(c=>c.code===code ? ({...c, active:!c.active}) : c);
-  saveCoupons(list);
-  audit("COUPON_TOGGLE", `Toggle coupon ${code}`);
-  renderCoupons();
-}
-function deleteCoupon(code){
-  if(!isAdmin()) return alert("Solo admin può eliminare.");
-  const list = coupons().filter(c=>c.code!==code);
-  saveCoupons(list);
-  audit("COUPON_DELETE", `Eliminato coupon ${code}`);
-  renderCoupons();
-}
-function renderCoupons(){
-  const list = coupons();
-  couponList.innerHTML = list.length ? list.map(c=>{
-    const exp = c.expire ? `Scade: ${c.expire}` : "No scadenza";
-    const lim = c.limit ? `${c.used}/${c.limit}` : `${c.used}/∞`;
-    return `
-      <div class="badge">
-        <div>
-          <div><strong>${escapeHtml(c.code)}</strong> — -${c.discount}% • ${escapeHtml(lim)} • ${escapeHtml(exp)}</div>
-          <div class="small">Stato: ${c.active?"✅ Attivo":"❌ Disattivo"}</div>
-        </div>
-        <div class="row" style="margin:0">
-          <button class="btn" onclick="toggleCoupon('${c.code}')">${c.active?"Disattiva":"Attiva"}</button>
-          <button class="btn" onclick="deleteCoupon('${c.code}')">Elimina</button>
-        </div>
-      </div>
-    `;
-  }).join("") : `<p class="small">Nessun coupon.</p>`;
-}
-
-/* ========= USERS / STAFF ========= */
-function users(){ return getJSON(K_USERS, []); }
-function saveUsers(list){ setJSON(K_USERS, list); }
-
-function addUser(){
-  if(!isAdmin()) return alert("Solo admin.");
-  const username = (sUser.value||"").trim();
-  const pass = (sPass.value||"").trim();
-  const role = sRole.value;
-
-  if(username.length<3 || pass.length<4) return alert("Username min 3, password min 4.");
-  const list = users();
-  if(list.some(u=>u.username===username)) return alert("Username già esistente.");
-
-  list.push({ username, pass, role, createdAt: nowISO() });
-  saveUsers(list);
-  audit("STAFF_ADD", `Creato utente ${username} (${role})`);
-  renderStaff();
-  sUser.value=""; sPass.value=""; sRole.value="staff";
-}
-
-function removeUser(username){
-  if(!isAdmin()) return alert("Solo admin.");
-  if(username==="admin") return alert("Non puoi eliminare admin.");
-  const list = users().filter(u=>u.username!==username);
-  saveUsers(list);
-  audit("STAFF_REMOVE", `Rimosso utente ${username}`);
-  renderStaff();
-}
-
-function renderStaff(){
-  const list = users();
-  staffList.innerHTML = list.map(u=>`
-    <div class="badge">
-      <div>
-        <div><strong>${escapeHtml(u.username)}</strong> — ${escapeHtml(u.role)}</div>
-        <div class="small">Creato: ${new Date(u.createdAt).toLocaleString()}</div>
-      </div>
-      <div class="row" style="margin:0">
-        <button class="btn" onclick="removeUser('${u.username}')">Elimina</button>
-      </div>
-    </div>
-  `).join("");
-}
-
-function changeMyPassword(){
-  const sess = session();
-  const oldP = (meOld.value||"").trim();
-  const newP = (meNew.value||"").trim();
-  if(newP.length<4) return alert("Password min 4.");
-
-  const list = users();
-  const me = list.find(u=>u.username===sess.username);
-  if(!me || me.pass!==oldP) return alert("Vecchia password errata.");
-
-  me.pass = newP;
-  saveUsers(list);
-  audit("PASSWORD", `Password aggiornata per ${sess.username}`);
-  alert("✅ Password aggiornata!");
-  meOld.value=""; meNew.value="";
-}
-
-/* ========= ORDERS ========= */
-function orders(){ return getJSON(K_ORDERS, []); }
-function saveOrders(list){ setJSON(K_ORDERS, list); }
-
-function getStatusClass(status){
-  const map = {
-    "Nuovo": "status-nuovo",
-    "In lavorazione": "status-lavorazione",
-    "In attesa pagamento": "status-att
+</script>
+</body>
+</html>
