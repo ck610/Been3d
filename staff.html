@@ -239,8 +239,8 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.10);margin:14px 0}
           <input id="price_video_basic" placeholder="Video Editing Base">
           <input id="price_video_pro" placeholder="Video Editing Pro">
           <input id="price_grafica" placeholder="Grafica (Logo & Banner)">
-          <input id="price-bot-discord" placeholder="Bot discord">
-          <input id="price-plugin-mc" placeholder="Plugin Mc">
+          <input id="price_bot-discord" placeholder="Bot discord">
+          <input id="price_plugin_mc" placeholder="Plugin Mc">
         </div>
 
         <h3 style="margin-top:16px">Sconti (%)</h3>
@@ -453,28 +453,31 @@ function loadPricesDiscounts(){
 
 function savePricesDiscounts(){
   if(!isAdmin()) return alert("Solo admin.");
+
   const prices = {
     sito_basic:+price_sito_basic.value||0,
     sito_pro:+price_sito_pro.value||0,
     video_basic:+price_video_basic.value||0,
     video_pro:+price_video_pro.value||0,
-    grafica:+price_grafica.value||0
+    grafica:+price_grafica.value||0,
     bot_discord:+price_bot_discord.value||0,
     plugin_mc:+price_plugin_mc.value||0
   };
+
   const discounts = {
     sito_basic:+disc_sito_basic.value||0,
     sito_pro:+disc_sito_pro.value||0,
     video_basic:+disc_video_basic.value||0,
     video_pro:+disc_video_pro.value||0,
-    grafica:+disc_grafica.value||0
+    grafica:+disc_grafica.value||0,
     bot_discord:+disc_bot_discord.value||0,
     plugin_mc:+disc_plugin_mc.value||0
   };
+
   setJSON(K_PRICES, prices);
   setJSON(K_DISCOUNTS, discounts);
   audit("PRICING", "Aggiornati prezzi/sconti prodotti");
-  alert("Salvato. Apri shop.html e vedrai i nuovi prezzi.");
+  alert("Prezzi salvati correttamente!");
 }
 
 function resetPricesDiscounts(){
@@ -701,5 +704,6 @@ if(!requireLogin()) {
 
 </body>
 </html>
+
 
 
