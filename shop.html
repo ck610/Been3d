@@ -830,14 +830,14 @@ hr{
 </div>
 
 <!-- CHECKOUT MODAL -->
-<div id="checkoutOverlay" class="overlay">
+<div id="checkoutOverlay" class="overlay" onclick="if(event.target===this) closeCheckout()">
   <div class="modal">
     <div class="modal-header">
       <h2>🛒 Checkout</h2>
-      <button class="btn" onclick="closeCheckout()">✕</button>
+      <button class="btn" onclick="closeCheckout()" style="width:40px;height:40px;padding:0;display:flex;align-items:center;justify-content:center">✕</button>
     </div>
     
-    <p id="coTitle" style="font-size:18px;font-weight:700;margin-bottom:24px"></p>
+    <p id="coTitle" style="font-size:20px;font-weight:700;margin-bottom:24px"></p>
 
     <div class="form-grid">
       <input id="coEmail" class="input
