@@ -387,39 +387,6 @@ footer{
   font-size:14px;
 }
 
-/* MODAL */
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.75);
-  backdrop-filter:blur(8px);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-  padding:20px;
-}
-.modal{
-  width:min(700px,100%);
-  max-height:90vh;
-  overflow-y:auto;
-  background:rgba(10,1,24,.95);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:32px;
-  box-shadow:0 40px 140px rgba(0,0,0,.8);
-  backdrop-filter:blur(20px);
-}
-.modal-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:24px;
-}
-.modal-header h2{
-  font-size:28px;
-  font-weight:900;
-}
 .input{
   width:100%;
   padding:12px 16px;
@@ -434,73 +401,6 @@ footer{
   outline:none;
   border-color:var(--accent);
   background:rgba(255,255,255,.05);
-}
-.form-grid{
-  display:grid;
-  gap:16px;
-  margin:24px 0;
-}
-hr{
-  border:none;
-  border-top:1px solid rgba(255,255,255,.08);
-  margin:24px 0;
-}
-.total-section{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:32px;
-  flex-wrap:wrap;
-}
-.total-info{
-  flex:1;
-}
-.total-label{
-  font-size:13px;
-  color:var(--muted);
-  margin-bottom:8px;
-}
-.total-price{
-  font-size:48px;
-  font-weight:900;
-  letter-spacing:-2px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
-.total-breakdown{
-  font-size:12px;
-  color:var(--muted);
-  margin-top:8px;
-}
-.payment-buttons{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  min-width:280px;
-}
-.info-box{
-  margin-top:24px;
-  padding:16px 20px;
-  border-radius:16px;
-  background:rgba(34,211,238,.08);
-  border:1px solid rgba(34,211,238,.25);
-  font-size:13px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-.info-box a{
-  color:var(--accent2);
-  font-weight:800;
-  text-decoration:none;
-}
-.small{
-  font-size:12px;
-  color:var(--muted);
-  margin-top:8px;
-  line-height:1.5;
 }
 
 /* ANIMATIONS */
@@ -576,7 +476,7 @@ hr{
           <li>Ottimizzazione base SEO</li>
         </ul>
         <div class="actions">
-          <button class="btn primary" onclick="buy('sito_basic','Sito Web Basic')">Acquista ora</button>
+          <button class="btn primary" onclick="buyProduct('sito_basic','Sito Web Basic')">Acquista ora</button>
         </div>
       </div>
 
@@ -594,7 +494,7 @@ hr{
           <li>Supporto post-lancio 30gg</li>
         </ul>
         <div class="actions">
-          <button class="btn primary" onclick="buy('sito_pro','Sito Web Pro')">Acquista ora</button>
+          <button class="btn primary" onclick="buyProduct('sito_pro','Sito Web Pro')">Acquista ora</button>
         </div>
       </div>
     </div>
@@ -625,7 +525,7 @@ hr{
           <li>Hosting incluso 3 mesi</li>
         </ul>
         <div class="actions">
-          <button class="btn primary" onclick="buy('bot_discord','Bot Discord Custom')">Acquista ora</button>
+          <button class="btn primary" onclick="buyProduct('bot_discord','Bot Discord Custom')">Acquista ora</button>
         </div>
       </div>
 
@@ -643,7 +543,7 @@ hr{
           <li>Aggiornamenti e supporto</li>
         </ul>
         <div class="actions">
-          <button class="btn primary" onclick="buy('plugin_mc','Plugin Minecraft')">Acquista ora</button>
+          <button class="btn primary" onclick="buyProduct('plugin_mc','Plugin Minecraft')">Acquista ora</button>
         </div>
       </div>
     </div>
@@ -677,7 +577,7 @@ hr{
           <p class="price" id="price-grafica">€7</p>
           <p class="per">pacchetto completo</p>
           <div class="actions" style="max-width:100%">
-            <button class="btn primary" onclick="buy('grafica','Grafica (Logo & Banner)')">Acquista ora</button>
+            <button class="btn primary" onclick="buyProduct('grafica','Grafica (Logo & Banner)')">Acquista ora</button>
           </div>
         </div>
       </div>
@@ -708,7 +608,7 @@ hr{
           <li>Export HD</li>
         </ul>
         <div class="actions">
-          <button class="btn primary" onclick="buy('video_basic','Video Editing Base')">Acquista ora</button>
+          <button class="btn primary" onclick="buyProduct('video_basic','Video Editing Base')">Acquista ora</button>
         </div>
       </div>
 
@@ -725,7 +625,7 @@ hr{
           <li>ADV e marketing ready</li>
         </ul>
         <div class="actions">
-          <button class="btn primary" onclick="buy('video_pro','Video Editing Pro')">Acquista ora</button>
+          <button class="btn primary" onclick="buyProduct('video_pro','Video Editing Pro')">Acquista ora</button>
         </div>
       </div>
     </div>
@@ -829,15 +729,87 @@ hr{
   </div>
 </div>
 
-<!-- CHECKOUT MODAL -->
-<div id="checkoutOverlay" class="overlay" onclick="if(event.target===this) closeCheckout()">
-  <div class="modal">
-    <div class="modal-header">
-      <h2>🛒 Checkout</h2>
-      <button class="btn" onclick="closeCheckout()" style="width:40px;height:40px;padding:0;display:flex;align-items:center;justify-content:center">✕</button>
-    </div>
-    
-    <p id="coTitle" style="font-size:20px;font-weight:700;margin-bottom:24px"></p>
+<script>
+/* ====== HELPERS ====== */
+document.getElementById("year").textContent = new Date().getFullYear();
 
-    <div class="form-grid">
-      <input id="coEmail" class="input
+const getJSON = (k, def) => {
+  try {
+    return JSON.parse(localStorage.getItem(k) || JSON.stringify(def));
+  } catch {
+    return def;
+  }
+};
+
+const setJSON = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+
+/* ====== ADMIN PANEL ====== */
+function toggleAdmin() {
+  document.getElementById('adminPanel').classList.toggle('open');
+}
+
+function savePrices() {
+  const prices = {
+    sito_basic: +document.getElementById('p-sito-basic').value || 10,
+    sito_pro: +document.getElementById('p-sito-pro').value || 30,
+    video_basic: +document.getElementById('p-video-basic').value || 2,
+    video_pro: +document.getElementById('p-video-pro').value || 4,
+    grafica: +document.getElementById('p-grafica').value || 7,
+    bot_discord: +document.getElementById('p-bot-discord').value || 5,
+    plugin_mc: +document.getElementById('p-plugin-mc').value || 5
+  };
+  
+  const discounts = {
+    sito_basic: +document.getElementById('d-sito-basic').value || 0,
+    sito_pro: +document.getElementById('d-sito-pro').value || 0,
+    video_basic: +document.getElementById('d-video-basic').value || 0,
+    video_pro: +document.getElementById('d-video-pro').value || 0,
+    grafica: +document.getElementById('d-grafica').value || 0,
+    bot_discord: +document.getElementById('d-bot-discord').value || 0,
+    plugin_mc: +document.getElementById('d-plugin-mc').value || 0
+  };
+  
+  setJSON('prices', prices);
+  setJSON('discounts', discounts);
+  
+  renderAllPrices();
+  alert('✅ Prezzi e sconti salvati con successo!');
+}
+
+function resetPrices() {
+  if (!confirm('Sei sicuro di voler ripristinare i prezzi di default?')) return;
+  
+  document.getElementById('p-sito-basic').value = 10;
+  document.getElementById('p-sito-pro').value = 30;
+  document.getElementById('p-video-basic').value = 2;
+  document.getElementById('p-video-pro').value = 4;
+  document.getElementById('p-grafica').value = 7;
+  document.getElementById('p-bot-discord').value = 5;
+  document.getElementById('p-plugin-mc').value = 5;
+  
+  document.getElementById('d-sito-basic').value = 30;
+  document.getElementById('d-sito-pro').value = 30;
+  document.getElementById('d-video-basic').value = 0;
+  document.getElementById('d-video-pro').value = 15;
+  document.getElementById('d-grafica').value = 20;
+  document.getElementById('d-bot-discord').value = 0;
+  document.getElementById('d-plugin-mc').value = 0;
+  
+  savePrices();
+}
+
+/* ====== PRICE ENGINE ====== */
+function getPrices() {
+  return getJSON('prices', {
+    sito_basic: 10,
+    sito_pro: 30,
+    video_basic: 2,
+    video_pro: 4,
+    grafica: 7,
+    bot_discord: 5,
+    plugin_mc: 5
+  });
+}
+
+function getDiscounts() {
+  return getJSON('disc
