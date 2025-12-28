@@ -65,6 +65,8 @@ body{
   display:inline-flex;
   align-items:center;
   gap:8px;
+  color:var(--text);
+  text-decoration:none;
 }
 .btn:hover{
   transform:translateY(-2px);
@@ -79,6 +81,83 @@ body{
 }
 .btn.primary:hover{
   box-shadow:0 8px 30px rgba(168,85,247,.4);
+}
+
+/* ADMIN PANEL */
+.admin-toggle{
+  position:fixed;
+  bottom:24px;
+  right:24px;
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:none;
+  color:#fff;
+  font-size:24px;
+  cursor:pointer;
+  box-shadow:0 8px 32px rgba(168,85,247,.4);
+  transition:all .3s;
+  z-index:1000;
+}
+.admin-toggle:hover{
+  transform:scale(1.1) rotate(90deg);
+}
+.admin-panel{
+  position:fixed;
+  top:0;
+  right:-600px;
+  width:min(600px,100vw);
+  height:100vh;
+  background:rgba(10,1,24,.98);
+  backdrop-filter:blur(20px);
+  border-left:1px solid var(--border);
+  box-shadow:-20px 0 80px rgba(0,0,0,.8);
+  transition:right .4s cubic-bezier(.4,0,.2,1);
+  z-index:9999;
+  overflow-y:auto;
+}
+.admin-panel.open{
+  right:0;
+}
+.admin-header{
+  padding:24px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  background:rgba(10,1,24,.95);
+  backdrop-filter:blur(20px);
+  z-index:10;
+}
+.admin-content{
+  padding:24px;
+}
+.admin-section{
+  margin-bottom:40px;
+}
+.admin-section h3{
+  font-size:18px;
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.price-grid, .discount-grid{
+  display:grid;
+  gap:12px;
+}
+.price-item{
+  display:grid;
+  grid-template-columns:1fr 100px;
+  gap:12px;
+  align-items:center;
+}
+.price-label{
+  font-size:14px;
+  color:var(--muted);
 }
 
 /* CONTAINER */
@@ -487,7 +566,7 @@ hr{
         <span class="badge">BASIC</span>
         <h3>Sito Web Basic</h3>
         <p class="product-desc">Perfetto per landing page e presenza online essenziale</p>
-        <p class="price" id="price-sito-basic">€—</p>
+        <p class="price" id="price-sito-basic">€10</p>
         <p class="per">pagamento unico</p>
         <ul>
           <li>Landing page 1 pagina</li>
@@ -505,7 +584,7 @@ hr{
         <span class="badge hot">🔥 CONSIGLIATO</span>
         <h3>Sito Web Pro</h3>
         <p class="product-desc">Soluzione completa per business che vogliono distinguersi</p>
-        <p class="price" id="price-sito-pro">€—</p>
+        <p class="price" id="price-sito-pro">€30</p>
         <p class="per">pagamento unico</p>
         <ul>
           <li>Sito multi-pagina completo</li>
@@ -536,7 +615,7 @@ hr{
         <span class="badge new">DISCORD</span>
         <h3>Bot Discord Custom</h3>
         <p class="product-desc">Bot personalizzato per gestire e animare il tuo server</p>
-        <p class="price" id="price-bot-discord">€—</p>
+        <p class="price" id="price-bot-discord">€5</p>
         <p class="per">pagamento unico</p>
         <ul>
           <li>Comandi personalizzati</li>
@@ -554,7 +633,7 @@ hr{
         <span class="badge new">MINECRAFT</span>
         <h3>Plugin Minecraft</h3>
         <p class="product-desc">Plugin su misura per il tuo server Minecraft</p>
-        <p class="price" id="price-plugin-mc">€—</p>
+        <p class="price" id="price-plugin-mc">€5</p>
         <p class="per">pagamento unico</p>
         <ul>
           <li>Sviluppo custom</li>
@@ -595,7 +674,7 @@ hr{
           </ul>
         </div>
         <div>
-          <p class="price" id="price-grafica">€—</p>
+          <p class="price" id="price-grafica">€7</p>
           <p class="per">pacchetto completo</p>
           <div class="actions" style="max-width:100%">
             <button class="btn primary" onclick="buy('grafica','Grafica (Logo & Banner)')">Acquista ora</button>
@@ -620,7 +699,7 @@ hr{
         <span class="badge">BASE</span>
         <h3>Video Editing Base</h3>
         <p class="product-desc">Editing essenziale e professionale per contenuti social</p>
-        <p class="price" id="price-video-basic">€—</p>
+        <p class="price" id="price-video-basic">€2</p>
         <p class="per">per video</p>
         <ul>
           <li>Montaggio professionale</li>
@@ -637,7 +716,7 @@ hr{
         <span class="badge hot">PRO</span>
         <h3>Video Editing Pro</h3>
         <p class="product-desc">Massima qualità per contenuti pubblicitari e premium</p>
-        <p class="price" id="price-video-pro">€—</p>
+        <p class="price" id="price-video-pro">€4</p>
         <p class="per">per video</p>
         <ul>
           <li>Effetti avanzati VFX</li>
@@ -659,6 +738,97 @@ hr{
   <p style="margin-top:8px;font-size:12px">Realizzato con ❤️ per creativi e imprenditori digitali</p>
 </footer>
 
+<!-- ADMIN TOGGLE -->
+<button class="admin-toggle" onclick="toggleAdmin()">⚙️</button>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel" class="admin-panel">
+  <div class="admin-header">
+    <h2 style="font-size:24px;font-weight:900">💰 Prezzi & Sconti</h2>
+    <button class="btn" onclick="toggleAdmin()">✕</button>
+  </div>
+  
+  <div class="admin-content">
+    <!-- PREZZI -->
+    <div class="admin-section">
+      <h3>💶 Prezzi (€)</h3>
+      <div class="price-grid">
+        <div class="price-item">
+          <span class="price-label">Sito Web Basic</span>
+          <input type="number" id="p-sito-basic" class="input" value="10">
+        </div>
+        <div class="price-item">
+          <span class="price-label">Sito Web Pro</span>
+          <input type="number" id="p-sito-pro" class="input" value="30">
+        </div>
+        <div class="price-item">
+          <span class="price-label">Video Editing Base</span>
+          <input type="number" id="p-video-basic" class="input" value="2">
+        </div>
+        <div class="price-item">
+          <span class="price-label">Video Editing Pro</span>
+          <input type="number" id="p-video-pro" class="input" value="4">
+        </div>
+        <div class="price-item">
+          <span class="price-label">Grafica (Logo & Banner)</span>
+          <input type="number" id="p-grafica" class="input" value="7">
+        </div>
+        <div class="price-item">
+          <span class="price-label">Bot Discord</span>
+          <input type="number" id="p-bot-discord" class="input" value="5">
+        </div>
+        <div class="price-item">
+          <span class="price-label">Plugin Minecraft</span>
+          <input type="number" id="p-plugin-mc" class="input" value="5">
+        </div>
+      </div>
+    </div>
+
+    <!-- SCONTI -->
+    <div class="admin-section">
+      <h3>🏷️ Sconti (%)</h3>
+      <div class="discount-grid">
+        <div class="price-item">
+          <span class="price-label">Sconto Sito Basic</span>
+          <input type="number" id="d-sito-basic" class="input" value="30" min="0" max="100">
+        </div>
+        <div class="price-item">
+          <span class="price-label">Sconto Sito Pro</span>
+          <input type="number" id="d-sito-pro" class="input" value="30" min="0" max="100">
+        </div>
+        <div class="price-item">
+          <span class="price-label">Sconto Video Base</span>
+          <input type="number" id="d-video-basic" class="input" value="0" min="0" max="100">
+        </div>
+        <div class="price-item">
+          <span class="price-label">Sconto Video Pro</span>
+          <input type="number" id="d-video-pro" class="input" value="15" min="0" max="100">
+        </div>
+        <div class="price-item">
+          <span class="price-label">Sconto Grafica</span>
+          <input type="number" id="d-grafica" class="input" value="20" min="0" max="100">
+        </div>
+        <div class="price-item">
+          <span class="price-label">Sconto Bot Discord</span>
+          <input type="number" id="d-bot-discord" class="input" value="0" min="0" max="100">
+        </div>
+        <div class="price-item">
+          <span class="price-label">Sconto Plugin MC</span>
+          <input type="number" id="d-plugin-mc" class="input" value="0" min="0" max="100">
+        </div>
+      </div>
+    </div>
+
+    <button class="btn primary" onclick="savePrices()" style="width:100%;justify-content:center;margin-top:24px">
+      💾 Salva Modifiche
+    </button>
+    
+    <button class="btn" onclick="resetPrices()" style="width:100%;justify-content:center;margin-top:12px">
+      🔄 Reset Default
+    </button>
+  </div>
+</div>
+
 <!-- CHECKOUT MODAL -->
 <div id="checkoutOverlay" class="overlay">
   <div class="modal">
@@ -670,198 +840,4 @@ hr{
     <p id="coTitle" style="font-size:18px;font-weight:700;margin-bottom:24px"></p>
 
     <div class="form-grid">
-      <input id="coEmail" class="input" placeholder="Email cliente (obbligatoria)" type="email">
-      <input id="coCoupon" class="input" placeholder="Codice coupon (opzionale)">
-      <input id="coNote" class="input" placeholder="Note aggiuntive (opzionale)">
-    </div>
-
-    <hr>
-
-    <div class="total-section">
-      <div class="total-info">
-        <div class="total-label">Totale da pagare</div>
-        <div class="total-price" id="coTotal">€—</div>
-        <div class="total-breakdown" id="coBreak"></div>
-      </div>
-      
-      <div class="payment-buttons">
-        <button class="btn primary" onclick="confirmOrder('pending')" style="justify-content:center">
-          📝 Crea ordine
-        </button>
-        <button class="btn" onclick="payPaypal()" style="justify-content:center">
-          💳 Paga con PayPal
-        </button>
-        <button class="btn" onclick="payStripe()" style="justify-content:center;opacity:.6">
-          💎 Carta (prossimamente)
-        </button>
-      </div>
-    </div>
-
-    <div class="info-box">
-      <span>💬</span>
-      <div>
-        Hai domande? Contattaci su Telegram:
-        <a href="https://t.me/ck_anto" target="_blank">@ck_anto</a>
-      </div>
-    </div>
-
-    <div class="small" style="margin-top:16px">
-      Cliccando su "Crea ordine" accetti i nostri termini di servizio. Per pagamenti con carta, contattaci direttamente.
-    </div>
-  </div>
-</div>
-
-<script>
-/* ====== STORAGE KEYS ====== */
-const K_PRICES="prices", K_DISCOUNTS="discounts", K_COUPONS="coupons";
-const K_ORDERS="been3d_orders", K_AUDIT="been3d_audit", K_SESSION="been3d_session";
-
-/* ====== HELPERS ====== */
-document.getElementById("year").textContent=new Date().getFullYear();
-const getJSON=(k,def)=>{try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(def));}catch{return def;}};
-const setJSON=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
-const nowISO=()=>new Date().toISOString();
-const money=n=>`€${Math.round((+n||0)*100)/100}`;
-
-/* ====== PRICE ENGINE ====== */
-const prices=getJSON(K_PRICES,{});
-const discounts=getJSON(K_DISCOUNTS,{});
-
-function finalPrice(key){
-  const base=+prices[key]||0;
-  const disc=+discounts[key]||0;
-  return disc>0 ? Math.round(base*(1-disc/100)) : base;
-}
-
-function renderPrice(key, id){
-  const el=document.getElementById(id);
-  if(!el) return;
-  const base=+prices[key]||0;
-  if(!base){ el.textContent="€—"; return; }
-  const disc=+discounts[key]||0;
-  if(disc>0){
-    el.innerHTML=`<span style="opacity:.4;text-decoration:line-through;font-size:20px">€${base}</span>
-                  <span style="font-size:42px;margin-left:8px">€${finalPrice(key)}</span>
-                  <span style="color:#22d3ee;font-size:14px;margin-left:8px">-${disc}%</span>`;
-  }else el.textContent=`€${base}`;
-}
-
-// Render all prices
-renderPrice("sito_basic","price-sito-basic");
-renderPrice("sito_pro","price-sito-pro");
-renderPrice("bot_discord","price-bot-discord");
-renderPrice("plugin_mc","price-plugin-mc");
-renderPrice("grafica","price-grafica");
-renderPrice("video_basic","price-video-basic");
-renderPrice("video_pro","price-video-pro");
-
-/* ====== CHECKOUT ====== */
-let selected=null;
-
-function openCheckout(){
-  checkoutOverlay.style.display="flex";
-}
-
-function closeCheckout(){
-  checkoutOverlay.style.display="none";
-  coEmail.value=""; coCoupon.value=""; coNote.value="";
-}
-
-function findCoupon(code){
-  if(!code) return null;
-  const list=getJSON(K_COUPONS,[]);
-  const c=list.find(x=>x.code===code.toUpperCase());
-  if(!c) return null;
-  if(c.active===false) return null;
-  if(c.expire && new Date(c.expire) < new Date()) return null;
-  if(c.limit && c.used>=c.limit) return null;
-  return c;
-}
-
-function calcTotalWithCoupon(productKey, couponCode){
-  const base=+prices[productKey]||0;
-  const prodDisc=+discounts[productKey]||0;
-  const afterProd = prodDisc>0 ? Math.round(base*(1-prodDisc/100)) : base;
-
-  const c=findCoupon(couponCode);
-  const coupDisc = c ? (+c.discount||0) : 0;
-  const afterCoupon = coupDisc>0 ? Math.round(afterProd*(1-coupDisc/100)) : afterProd;
-
-  return { base, prodDisc, afterProd, coupon: c?.code || null, coupDisc, total: afterCoupon };
-}
-
-function buy(key, name){
-  if(!(+prices[key])) return alert("⚠️ Prezzo non ancora configurato. Contattaci su Telegram per un preventivo!");
-  selected={ key, name };
-  coTitle.textContent = name;
-  const t=calcTotalWithCoupon(key,"");
-  coTotal.textContent = money(t.total);
-  coBreak.textContent = `Base ${money(t.base)} • Sconto ${t.prodDisc||0}% • Coupon 0%`;
-  openCheckout();
-}
-
-// Apply coupon live
-coCoupon?.addEventListener("input", ()=>{
-  if(!selected) return;
-  const t=calcTotalWithCoupon(selected.key, coCoupon.value.trim());
-  coTotal.textContent = money(t.total);
-  coBreak.textContent = `Base ${money(t.base)} • Sconto ${t.prodDisc||0}% • Coupon ${t.coupDisc||0}%`;
-});
-
-function confirmOrder(mode){
-  if(!selected) return;
-  const email=(coEmail.value||"").trim();
-  if(!email) return alert("⚠️ Inserisci un'email valida per continuare");
-
-  const couponCode=(coCoupon.value||"").trim();
-  const t=calcTotalWithCoupon(selected.key, couponCode);
-
-  // Update coupon usage
-  if(t.coupon){
-    const list=getJSON(K_COUPONS,[]);
-    const idx=list.findIndex(c=>c.code===t.coupon);
-    if(idx>=0){
-      list[idx].used=(+list[idx].used||0)+1;
-      setJSON(K_COUPONS,list);
-    }
-  }
-
-  const order={
-    id: Math.random().toString(16).slice(2,8).toUpperCase(),
-    createdAt: nowISO(),
-    updatedAt: nowISO(),
-    status: mode==="pending" ? "In attesa pagamento" : "Nuovo",
-    customerEmail: email,
-    note: (coNote.value||"").trim(),
-    coupon: t.coupon,
-    items:[{ key:selected.key, name:selected.name, price:t.total }],
-    total: t.total,
-    breakdown: t
-  };
-
-  const orders=getJSON(K_ORDERS,[]);
-  orders.unshift(order);
-  setJSON(K_ORDERS, orders);
-
-  localStorage.setItem("been3d_last_order", JSON.stringify({
-    id: order.id,
-    email: email
-  }));
-
-  alert(`✅ Ordine creato con successo!\n\n📋 Codice: ${order.id}\n📧 Email: ${email}\n\n👉 Controlla "I tuoi ordini" per i dettagli`);
-  closeCheckout();
-}
-
-function payPaypal(){
-  if(!selected) return;
-  const t=calcTotalWithCoupon(selected.key, coCoupon.value.trim());
-  const url = "https://paypal.me/altatismp/" + (t.total||0);
-  window.open(url, "_blank");
-}
-
-function payStripe(){
-  alert("💎 Pagamento con carta disponibile a breve!\n\nPer ora puoi:\n• Usare PayPal\n• Contattarci su Telegram: @ck_anto");
-}
-</script>
-</body>
-</html>
+      <input id="coEmail" class="input
