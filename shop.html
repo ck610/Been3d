@@ -812,4 +812,63 @@ function getPrices() {
 }
 
 function getDiscounts() {
-  return getJSON('disc
+  return getJSON('discounts', {
+    sito_basic: 30,
+    sito_pro: 30,
+    video_basic: 0,
+    video_pro: 15,
+    grafica: 20,
+    bot_discord: 0,
+    plugin_mc: 0
+  });
+}
+
+function renderPrice(key, id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  
+  const prices = getPrices();
+  const discounts = getDiscounts();
+  const base = +prices[key] || 0;
+  
+  if (!base) {
+    el.textContent = "€—";
+    return;
+  }
+  
+  const disc = +discounts[key] || 0;
+  
+  if (disc > 0) {
+    const final = Math.round(base * (1 - disc / 100) * 100) / 100;
+    el.innerHTML = `<span style="opacity:.4;text-decoration:line-through;font-size:20px">€${base}</span>
+                    <span style="font-size:42px;margin-left:8px">€${final}</span>
+                    <span style="color:#22d3ee;font-size:14px;margin-left:8px">-${disc}%</span>`;
+  } else {
+    el.textContent = `€${base}`;
+  }
+}
+
+function renderAllPrices() {
+  renderPrice("sito_basic", "price-sito-basic");
+  renderPrice("sito_pro", "price-sito-pro");
+  renderPrice("bot_discord", "price-bot-discord");
+  renderPrice("plugin_mc", "price-plugin-mc");
+  renderPrice("grafica", "price-grafica");
+  renderPrice("video_basic", "price-video-basic");
+  renderPrice("video_pro", "price-video-pro");
+}
+
+// Initial render
+renderAllPrices();
+
+/* ====== BUY FUNCTION (REDIRECT TO CHECKOUT) ====== */
+function buyProduct(key, name) {
+  const prices = getPrices();
+  if (!(+prices[key])) {
+    alert("⚠️ Prezzo non ancora configurato. Contattaci su Telegram per un preventivo!");
+    return;
+  }
+  
+  console.log('Redirecting to checkout with:', key, name);
+  window.location.href = `checkout.html?product=${encodeURIComponent(key)}&name=${encodeURIComponent(name)}`;
+}
